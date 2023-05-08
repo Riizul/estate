@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body, html {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #f7f7f7;
+  }
+  .container {
+    @apply px-[30px] md:px-5;
+  }
+  .font-raleway {
+    font-family: 'Raleway', sans-serif;
+  }
+  .font-roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+  h1 {
+    @apply font-raleway
+  }
+  .section {
+    @apply py-[50px] md:py-[80px] lg:py-[100px]
+  }
+  .img-overlay {
+    box-shadow:inset 0 0 0 2000px rgba(0, 0, 0, 1);
+  }
+}
+
+@layer utilities {
+  .burger {
+    @apply block absolute h-[2.5px] w-8 transform transition ease-in-out ;
+  }
+  .section-content {
+    @apply text-dark2
+  }
+  .section-content .sub {
+    @apply text-yellow3 uppercase font-roboto mb-1 md:mb-2 inline-block
+  }
+  .section-content .title {
+    @apply font-raleway font-[800] text-3xl md:text-4xl lg:text-5xl mb-3 lg:mb-8 text-dark
+  }
+  .section-content .content {
+    @apply lg:text-lg
+  }
+  .box-shadow {
+    box-shadow: 0 -1px 19px 0 rgb(38 42 76 / 8%);
+  }
+  .box-shadow2 {
+    box-shadow: 0 -1px 19px 0 rgb(38 42 76 / 3%);
+  }
+  .entrance-wrapper {
+      @apply flex items-center justify-center bg-gray-50 fixed top-0 left-0 right-0 bottom-0;
+  }
+  .page {
+    @apply pt-[90px] pb-[80px] md:pb-[120px]
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #F3D152 !important
+}
+
+.nuxt-link-exact-active {
+  color: #C3922E !important;
+  background: #eecc87;
+}
+
+@media (min-width: 1022px) { 
+  .nuxt-link-exact-active {
+    color: #C3922E !important;
+    background: none;
+  }  
+}
+ 
+.d-none{ display:none;}
+
+.title-2 {
+  --tw-text-opacity: 1;
+  font-size: 22px;
+  font-weight: 600;
+  border-left: 2px solid;
+  border-color: rgb(234 179 8 / var(--tw-text-opacity));
+  padding-left: 10px;
+}

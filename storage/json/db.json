@@ -1,0 +1,155 @@
+{
+  "global" : [
+    {
+      "id": 1,
+      "realtor_address": "8th door, Filipino Homes Liloan Office, Poblacion Liloan Cebu,City 6002 (in front of Grand Mall Liloan)",
+      "email": "jayann.propertysearchph@gmail.com",
+      "telephone_number": "000-000-0000",
+      "copyright": "© Property Search - All rights reserved",
+      "facebook": "https://www.facebook.com/jayannvalduezabonjoc",
+      "youtube": "https://www.youtube.com/@jayannhvaldueza",
+      "instagram": "https://www.instagram.com/jayannhvaldueza",
+      "twitter": "#",
+      "tictok": "https://www.tiktok.com/@jayhval",
+      "mobile_phone": [
+        {
+          "id": 1,
+          "network" : "Globe",
+          "icon" : "globe",
+          "link" : "tel:+63 917 889 2508",
+          "rel" : "",
+          "target": "",
+          "number": "09178892508"
+        },
+        {
+          "id": 2,
+          "network" : "Whatsapp",
+          "icon" : "whatsapp",
+          "link" : "https://api.whatsapp.com/send?phone=9178892508",
+          "rel" : "noopener noreferrer",
+          "target": "_blank",
+          "number": "09178892508"
+        },
+        {
+          "id": 3,
+          "network" : "Viber",
+          "icon" : "viber",
+          "link" : "viber://contact?number=9178892508",
+          "rel" : "",
+          "target": "",
+          "number": "09178892508"
+        },
+        {
+          "id": 4,
+          "network" : "Telegram",
+          "icon" : "telegram",
+          "link" : "https://t.me/jayannhvaldueza",
+          "rel" : "nofollow noreferrer",
+          "target": "",
+          "number": "09178892508"
+        }
+      ],
+      "site_logo": [],
+      "defaultSeo": "Property Search",
+      "Favicon": "logo.png",
+      "siteName": "Property Search",
+      "shareImage": "houses.webp"
+    }
+  ], 
+  "home" : [
+    {
+        "id": 2,
+        "banner_cta_text": " Finding your perfect address",
+        "banner_cta_sub_text": "We are here to provide you a stress-free home buying experience without the pressure. At Your Service.",
+        "published_at": "2022-06-16T14:51:52.172Z",
+        "home_section_1": {
+            "id": 1,
+            "about": "about me",
+            "title": "Working with Jay Ann",
+            "content": "My name is Jay Ann and I am a highly trained real estate professional with years of experience. I am a member of the National Association of Realtors and a PRC Accredited Real Estate Salesperson. I work hard to ensure that you are getting the best deal possible on your new home or investment property.",
+            "realtor_name": "Jay Ann Hortezano Valdueza",
+            "realtor_position": "Cebu Realtor",
+            "realtor_image": {
+                "id": 1,
+                "name": "realtor.webp",
+                "alternativeText": ""
+            }
+        },
+        "home_section_2": {
+            "id": 1,
+            "about": "featured properties",
+            "title": "Finest selection of our properties"
+        },
+        "home_section_3": {
+            "id": 1,
+            "about": "services",
+            "title": "Jay Ann help clients sell, buy or rent properties hassle free",
+            "content": "Utilizing his exceptional experience and knowledge of the luxury waterfront markets, Roland serves an extensive and elite worldwide client base. He enjoys a reputation as a tenacious Broker.",
+            "list_1": "24/7 Support available",
+            "list_2": "Expert legal support from us",
+            "list_3": "Free submission on our website",
+            "list_4": "Home loans assistance from our staff",
+            "background_image": {
+                "id": 3,
+                "name": "home.webp",
+                "alternativeText": ""
+            }
+        },
+        "home_section_4": {
+            "id": 1,
+            "about": "videos",
+            "title": "Property Videos"
+        },
+        "Seo": {
+          "metaTitle": "Your source for all your real estate needs",
+          "metaDescription": "Property Search PH help clients sell, buy or rent properties hassle free",
+          "shareImage": "./img/logo.svg"
+        }
+    }
+  ],
+  "house_and_lot" : [
+    {
+      "id": 3,
+      "page_name": "House & Lot",
+      "Seo": {
+        "metaTitle": "House & Lot",
+        "metaDescription": "House & Lot",
+        "shareImage": "houses.webp"
+      }
+    }
+  ],
+  "condominiums" : [
+    {
+      "id": 4,
+      "page_name": "Condominiums",
+      "Seo": {
+        "metaTitle": "Condominiums",
+        "metaDescription": "Condominiums",
+        "shareImage": "houses.webp"
+      }
+    }
+  ],
+  "for_rent" : [
+    {
+      "id": 5,
+      "page_name": "For Rent",
+      "Seo": {
+        "metaTitle": "For Rent",
+        "metaDescription": "For Rent",
+        "shareImage": "houses.webp"
+      }
+    }
+  ],
+  "contact" : [
+    {
+      "id": 6,
+      "page_name": "Contact Me",
+      "content": " My name is Jay Ann and I am a highly trained real estate professional with years of experience. I am a member of the National Association of Realtors and a PRC Accredited Real Estate Salesperson. I work hard to ensure that you are getting the best deal possible on your new home or investment property. <br><br>Being a real estate agent is more than just listing and selling homes. It is about understanding the needs and wants of my clients, as well as anticipating their needs for the future. <br><br>I am knowledgeable about the local market, including school districts, neighborhoods and local amenities. I will assist you with all aspects of buying or selling a home and can help you get through the process as quickly as possible. <br><br>I strive to provide excellent customer service and communication throughout your real estate transaction. This allows me to build relationships and trust with my clients so that when they need assistance in the future, I can provide it to them with ease. <br>Connect with me and let's discuss how I can help you!",
+      "Seo": {
+        "metaTitle": "Contact",
+        "metaDescription": "Contact",
+        "shareImage": "JayAnnBonjoc.webp"
+      }
+    }
+  ]
+}
