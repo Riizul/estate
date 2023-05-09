@@ -49,16 +49,14 @@
               @foreach($property->contents as $item)
                 @switch($item->contentTypeId)
                   @case(1)
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="title-box-d">
-                          <h3 class="title-d">{{ $item->value }}</h3>
-                        </div>
-                      </div>
+                    <div class="title-box-d m-t-50">
+                      <h3 class="title-d">
+                        {!!html_entity_decode( nl2br(e($item->value)) )!!}
+                      </h3>
                     </div>
                   @break
                   @case(2)
-                    <div class="property-description">
+                    <div class="property-description m-t-50">
                       {!!html_entity_decode( nl2br(e($item->value)) )!!}
                     </div>
                   @break

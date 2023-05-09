@@ -35,7 +35,7 @@
                       {{ $item->description }}
                       </p>
                       <p class="intro-subtitle intro-price">
-                        <a href="#"><span class="price-a">learn more</span></a>
+                        <a href="{{ env('APP_URL') }}{{ $item->uri }}"><span class="price-a">learn more</span></a>
                       </p>
                     </div>
                   </div>
