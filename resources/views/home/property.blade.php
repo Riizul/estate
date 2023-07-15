@@ -17,7 +17,7 @@
                 <a href="{{ env('APP_URL') }}/">Home</a>
               </li>
               <li class="breadcrumb-item">
-                <a href="{{ env('APP_URL') }}/{!! $property->category->get()->first()->slug !!}">
+                <a href="{{ env('APP_URL') }}/{!! $property->category->slug !!}">
                 {{ $property->category->name }}
                 </a>
               </li>

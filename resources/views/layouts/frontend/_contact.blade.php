@@ -18,20 +18,24 @@
             <h4 class="icon-title">Contact</h4>
             </div>
             <div class="icon-box-content">
-            <p class="mb-1">Phone.
-                <span class="color-a">+54 356 945234</span>
+            <p class="mb-3">
+                <img src="{!! url('images/icons/phone2.svg')!!}" alt="phone" class="mx-auto w-4 h-4">
+                Globe
+                <a href="tel:{{ env('GLOBAL_MOBILE') }}" class="color-a">{{ env('GLOBAL_MOBILE') }}</a>
             </p>
-            <p class="mb-1">Phone.
-                <span class="color-a">+54 356 945234</span>
+            <p class="mb-3">
+                <img src="{!! url('images/icons/whatsapp.svg')!!}" alt="phone" class="mx-auto w-4 h-4">
+                Whatsapp
+                <a href="https://api.whatsapp.com/send?phone=639950114098" class="color-a">
+                {{ env('GLOBAL_MOBILE') }}
+                </a>
             </p>
-            <p class="mb-1">Phone.
-                <span class="color-a">+54 356 945234</span>
-            </p>
-            <p class="mb-1">Phone.
-                <span class="color-a">+54 356 945234</span>
-            </p>
-            <p class="mb-1">Phone.
-                <span class="color-a">+54 356 945234</span>
+            <p class="mb-3">
+                <img src="{!! url('images/icons/viber.svg')!!}" alt="phone" class="mx-auto w-4 h-4">
+                Viber
+                <a href="viber://contact?number={{ env('GLOBAL_MOBILE') }}" class="color-a">
+                {{ env('GLOBAL_MOBILE') }}
+                </a>
             </p>
             </div>
         </div>
@@ -50,28 +54,28 @@
             <div class="socials-footer">
                 <ul class="list-inline">
                 <li class="list-inline-item">
-                    <a href="#" class="link-one">
+                    <a href="{{ env('GLOBAL_FACEBOOK') }}" class="link-one">
                     <i class="fa fa-facebook" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="link-one">
+                    <a href="{{ env('GLOBAL_TWITTER') }}" class="link-one">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="link-one">
+                    <a href="{{ env('GLOBAL_INSTAGRAM') }}" class="link-one">
                     <i class="fa fa-instagram" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="link-one">
+                    <a href="{{ env('GLOBAL_PINTEREST') }}" class="link-one">
                     <i class="fa fa-pinterest-p" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="link-one">
-                    <i class="fa fa-dribbble" aria-hidden="true"></i>
+                    <a href="https://api.whatsapp.com/send?phone=639950114098" class="link-one">
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
                     </a>
                 </li>
                 </ul>
@@ -90,14 +94,15 @@
             <h4 class="icon-title">Email</h4>
             </div>
             <div class="icon-box-content">
-            <p class="mb-1">contact@example.com 
+            <p class="mb-1">
+                <a href="mailto:{{ env('GLOBAL_MAIL') }}" class="color-text-a"> {{ env('GLOBAL_MAIL') }}</a>
             </p>
             </div>
         </div>
         </div>
     </div>
     <div class="col-md-6">
-    <img src="{!! url('images/agent-7.jpg')!!}" alt="" class="agent-avatar img-fluid">
+    <img src="{!! url('images/property-1.jpg')!!}" alt="" class="agent-avatar img-fluid">
     </div>
 </div>
 </div>

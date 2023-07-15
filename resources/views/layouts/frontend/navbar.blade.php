@@ -2,7 +2,7 @@
   <!--/ Form Search Star /-->
   <div class="box-collapse">
     <div class="title-box-d">
-      <h3 class="title-d">Search Property</h3>
+      <h3 class="title-d">Ebeye</h3>
     </div>
     <span class="close-box-collapse right-boxed ion-ios-close"></span>
     <div class="box-collapse-wrap form">
@@ -86,7 +86,9 @@
 
     <div class="navbar navbar-default navbar-trans navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand text-brand" href="{{ env('APP_URL') }}/">Ebeye<span class="color-b">Agency</span></a>
+        <a class="navbar-brand text-brand" href="{{ env('APP_URL') }}/">
+          <img src="{!! url('images/erb-logo.png')!!}" class="logo">
+        </a>
 
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
           aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +100,7 @@
           data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-expanded="false">
           <span class="fa fa-phone" aria-hidden="true"></span>
         </button> -->
-        <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
+        <div class="navbar-collapse collapse justify-content-end m-t-15" id="navbarDefault">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" data-id="home" href="{{ env('APP_URL') }}/">Home</a>

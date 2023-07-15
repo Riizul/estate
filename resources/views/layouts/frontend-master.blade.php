@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>AB</title>
+    <title>Ebeye</title>
 
     <!-- Favicons -->
     <link href="{!! url('images/favicon.png') !!}" rel="icon">
@@ -52,8 +52,8 @@
 
   <!-- JavaScript Libraries -->
   <script src="{!! url('lib/jquery/jquery.min.js') !!}"></script>
-  <script src="{!! url('lib/jquery/jquery-migrate.min.js') !!}"></script>
-  <script src="{!! url('lib/popper/popper.min.js') !!}"></script>
+  <!-- <script src="{!! url('lib/jquery/jquery-migrate.min.js') !!}"></script> -->
+  <!-- <script src="{!! url('lib/popper/popper.min.js') !!}"></script> -->
   <script src="{!! url('lib/bootstrap/js/bootstrap.min.js') !!}"></script>
   <script src="{!! url('lib/easing/easing.min.js') !!}"></script>
   <script src="{!! url('lib/owlcarousel/owl.carousel.min.js') !!}"></script>

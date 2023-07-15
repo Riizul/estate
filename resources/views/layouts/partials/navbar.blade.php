@@ -6,7 +6,7 @@
       </a> -->
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{{ route('content.index') }}" class="nav-link px-2 text-white">Property Search Ph</a></li>
+        <li><a href="{{ route('content.index') }}" class="nav-link px-2 text-white">Ebeye</a></li>
         <!-- @auth
           <li><a href="{{ route('users.index') }}" class="nav-link px-2 text-white">Users</a></li>
           <li><a href="{{ route('content.index') }}" class="nav-link px-2 text-white">Property</a></li>
@@ -18,7 +18,7 @@
       </form> -->
 
       @auth
-        {{auth()->user()->name}}&nbsp;
+        <!-- {{auth()->user()->name}}&nbsp; -->
         <div class="text-end">
           <a href="{{ route('logout.perform') }}" class="btn btn-outline-light me-2">Logout</a>
         </div>

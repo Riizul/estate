@@ -57,6 +57,22 @@
                     <span class="text-danger text-left">{{ $errors->first('location') }}</span>
                 @endif
             </div>
+
+           <!-- Price -->
+           <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <textarea 
+                    class="form-control"
+                    name="price" 
+                    placeholder="Price"
+                    rows="5">{{ $property->price }}</textarea>
+
+                @if ($errors->has('Price'))
+                    <span class="text-danger text-left">{{ $errors->first('price') }}</span>
+                @endif
+            </div>
+
+            <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea 
@@ -841,6 +857,30 @@
 
             $( "#contentTypeEnumListGroup" ).sortable();
             $( "#contentTypeEnumListGroup" ).disableSelection();
+
+            $("input.mask").each((i,ele)=>{
+                let clone=$(ele).clone(false)
+                clone.attr("type","text")
+                let ele1=$(ele)
+                clone.val(Number(ele1.val()).toLocaleString("en"))
+                $(ele).after(clone)
+                $(ele).hide()
+                clone.mouseenter(()=>{
+                    ele1.show()
+                    clone.hide()
+                })
+                setInterval(()=>{
+                    let newv=Number(ele1.val()).toLocaleString("en")
+                    if(clone.val()!=newv){
+                        clone.val(newv)
+                    }
+                },10)
+                $(ele).mouseleave(()=>{
+                    $(clone).show()
+                    $(ele1).hide()
+                })
+                
+            })
         });
     })(jQuery);
 </script>

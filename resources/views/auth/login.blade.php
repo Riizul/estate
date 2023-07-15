@@ -4,9 +4,8 @@
     <form method="post" action="{{ route('login.perform') }}">
         
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-        <img class="mb-4" src="{!! url('images/logo.dd3f134.svg') !!}" alt="" width="370">
+        <img class="mb-4" src="{!! url('images/erb-logo.png') !!}" alt="" width="350">
         
-        <!-- <h1 class="h3 mb-3 fw-normal">Login</h1> -->
 
         @include('layouts.partials.messages')
 

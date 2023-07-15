@@ -63,13 +63,12 @@ class PropertyController extends Controller
 
     public function publish($id) 
     {
-        //Information
         $property = Property::find($id);
         $property->status = "published";
         $property->save();
 
         return redirect()
-            ->route('property.index');
+            ->route('content.index');
     }
 
     public function destroy($id) 
@@ -79,19 +78,17 @@ class PropertyController extends Controller
         $property->save();
 
         return redirect()
-            ->route('property.index');
-            
+            ->route('content.index');
     }
 
     public function show($id) 
     {
-        //Information
         $property = Property::find($id);
         $property->status = "draft";
         $property->save();
 
         return redirect()
-            ->route('property.index');
+            ->route('content.index');
     }
 
     public function store(Request $request)
@@ -105,7 +102,7 @@ class PropertyController extends Controller
         $property->name = $request->name;
         $property->locationId = 0; //BTK:for supply
         $property->location =  $request->location;
-        $property->price =  0;
+        $property->price =  is_null($request->price)? "" : $request->price;
         $property->description =  $request->description;
         $property->slug =  $this->slugify($request->name);
         $property->uri =  '/' . $this->slugify(PropertyCategory::where('id','=', $request->category)->get()->first()->name) . '/' . $this->slugify($request->name);
@@ -214,6 +211,7 @@ class PropertyController extends Controller
         $property->stateId = $request->status;
         $property->name = $request->name;
         $property->location =  $request->location;
+        $property->price =  is_null($request->price)? "" : $request->price;
         $property->description =  $request->description;
         $property->slug =  $this->slugify($request->name);
         $property->uri =  '/' . $this->slugify(PropertyCategory::where('id','=', $request->category)->get()->first()->name) . '/' . $this->slugify($request->name);
@@ -279,10 +277,16 @@ class PropertyController extends Controller
                 return Property::where("status",'=', 'published')->get(); 
         }
 
-        return $properties = Property::where([
+        $properties = Property::where([
             ["categoryId",'=', $category],
             ["status",'=', 'published'],
         ])->get();
+
+        foreach ($properties as $item){ 
+            $item->category = PropertyCategory::where('id','=', $item->categoryId)->get()->first();
+        }
+
+        return $properties;
     }
 
     public function getProperty($id) {
@@ -301,6 +305,8 @@ class PropertyController extends Controller
                 'metaDescription'=> $item->description,
                 'shareImage' => $item->banner
             ];
+
+            $item->category = PropertyCategory::where('id','=', $item->categoryId)->get()->first();
         }
         return $properties;
     }

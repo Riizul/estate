@@ -18,6 +18,7 @@
 		isTrans = true;
 		break;
 	case "/contact":
+		$('.logo').attr('src', '/images/erb-logo.png')
 		$('#navbarDefault [data-id="contact"]').addClass("active")
 		$('.navbar-default').addClass('navbar-white-top');
 		$('.navbar-default').css("background", "#fff")
@@ -26,9 +27,11 @@
 	case "/house-and-lot":
 	case "/condominium":
 	case "/for-rent":
+		$('.logo').attr('src', '/images/erb-logo.png')
 		$('#navbarDefault [data-id="properties"]').addClass("active")
 		$('.navbar-default').addClass('navbar-white-top');
 		$('.navbar-default').css("background", "#fff")
+		$('.proptery-tag-1').remove()
 		break;
   }
 
@@ -101,16 +104,19 @@
 				$('.black-header').addClass('black-header-trans');
 				$('.navbar-default').addClass('navbar-reduce');
 				$('.navbar-default').removeClass('navbar-trans');
+				$('.logo').attr('src', '/images/erb-logo.png')
 			} else {
 				$('.black-header').removeClass('black-header-trans');
 				$('.navbar-default').addClass('navbar-trans');
 				$('.navbar-default').removeClass('navbar-reduce');
+				$('.logo').attr('src', '/images/erb-logo-white.png')
 			}
 		}
 		else
 		{
+			$('.logo').attr('src', '/images/erb-logo.png')
 			$('.navbar-default').addClass('navbar-reduce');
-				$('.navbar-default').removeClass('navbar-trans');
+			$('.navbar-default').removeClass('navbar-trans');
 		}
 		
 		

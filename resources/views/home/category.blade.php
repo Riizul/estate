@@ -32,41 +32,7 @@
     <div class="container">
       <div class="row">
         @foreach($properties as $item)
-        <div class="col-md-4">
-          <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img 
-                    src="{!! url('storage/tmp', $item->banner) !!}" 
-                    alt="" 
-                    class="img-a img-fluid"
-                    height="450"
-                    style="width: auto;
-                          height: 450px;
-                          object-fit: cover;"
-                  >
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="#">{{ $item->name}}</a>
-                    </h2>
-                  </div>
-                  <div class="card-body-a">
-                    <div class="price-box d-flex">
-                      <a href="property-single.html" class="property-location link-a">
-                          <span class="fa fa-map-marker"></span>
-                          {{ $item->location }}
-                      </a>
-                    </div>
-                    <a href="{{ env('APP_URL') }}{{ $item->uri }}" class="link-a" style="color: #189ad3">Learn more
-                      <span class="ion-ios-arrow-forward"></span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
+          @include('layouts.frontend._property')
         @endforeach
       </div>
     </div>

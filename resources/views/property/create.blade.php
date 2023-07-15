@@ -57,6 +57,20 @@
                     <span class="text-danger text-left">{{ $errors->first('location') }}</span>
                 @endif
             </div>
+            
+            <!-- Price -->
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <textarea 
+                    class="form-control"
+                    name="price" 
+                    placeholder="Price"
+                    rows="5"></textarea>
+                @if ($errors->has('price'))
+                    <span class="text-danger text-left">{{ $errors->first('price') }}</span>
+                @endif
+            </div>
+
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea 
