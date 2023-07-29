@@ -38,3 +38,38 @@ main > .container {
 .dropdown-toggle {
   outline: 0;
 }
+
+#propertyGrid .btn-icon i {
+  width: 15px;
+  height: 15px;
+}
+
+#propertyGrid_filter {
+  float: left;
+}
+
+#propertyGrid_filter input {
+  margin-left: 0;
+  width: 300px;
+}
+
+.m-r-5 {
+  margin-right: 5px;
+}
+
+.pull-left { float: left !important;}
+.pull-right {float: right !important}
+
+.content-type-element { display:none }
+
+
+#content-container { margin-bottom: 10px}
+#content-container p, #content-container ul {margin-bottom:0}
+#content-container .item h4 { margin:20px 0 10px !important}
+#content-container .item img { margin:5px; width: 100%}
+#content-container .item:hover {
+    cursor: pointer;
+    border-radius: 3px; 
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
+}

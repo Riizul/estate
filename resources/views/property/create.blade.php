@@ -3,183 +3,215 @@
 @section('styles')
 <!-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/> -->
+
 <link rel="stylesheet" href="{{asset('filePond/css/filepond-plugin-image-preview.css')}}">
 <link rel="stylesheet" href="{{asset('filePond/css/filepond.css')}}">
-<style>
-    .pull-left { float: left !important;}
-    .pull-right {float: right !important}
-    .content-type-element { display:none }
-    #content-container { margin-bottom: 10px}
-    #content-container p, #content-container ul {margin-bottom:0}
-    #content-container .item h4 { margin:0 !important}
-    #content-container .item img { margin:5px}
-    #content-container .item:hover {
-        cursor: pointer;
-        border-radius: 3px; 
-        --bs-bg-opacity: 1;
-        background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
-    }
-</style>
 @endsection
 
 @section('content')
-<div class="row">
-    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('content.index') }}">Property</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Create</li>
-        </ol>
-    </nav>
-
-    <div class="bg-light p-4 rounded col-md-4">
-        <form id="propertyForm" method="POST" action="{{ route('content.store') }}">
-            @csrf
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input value="{{ old('name') }}" 
-                    type="text" 
-                    class="form-control" 
-                    name="name" 
-                    placeholder="Name" required>
-
-                @if ($errors->has('name'))
-                    <span class="text-danger text-left">{{ $errors->first('name') }}</span>
-                @endif
+<div class="content-wrapper">
+    <!-- Header -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Property Information</h1>
             </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input value="{{ old('location') }}"
-                    type="text" 
-                    class="form-control" 
-                    name="location" 
-                    placeholder="location" required>
-                @if ($errors->has('location'))
-                    <span class="text-danger text-left">{{ $errors->first('location') }}</span>
-                @endif
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/content">Properties</a></li>
+                <li class="breadcrumb-item active">Create</li>
+                </ol>
             </div>
-            
-            <!-- Price -->
-            <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
-                <textarea 
-                    class="form-control"
-                    name="price" 
-                    placeholder="Price"
-                    rows="5"></textarea>
-                @if ($errors->has('price'))
-                    <span class="text-danger text-left">{{ $errors->first('price') }}</span>
-                @endif
             </div>
-
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea 
-                    class="form-control"
-                    name="description" 
-                    placeholder="description"
-                    rows="5" required></textarea>
-                <!-- <input value="{{ old('description') }}"
-                    type="text" 
-                    class="form-control" 
-                    name="description" 
-                    placeholder="description" required> -->
-                @if ($errors->has('description'))
-                    <span class="text-danger text-left">{{ $errors->first('description') }}</span>
-                @endif
-            </div>
-            <!-- <div class="mb-3 d-none">
-                <label for="price" class="form-label">price</label>
-                <input value="{{ old('price') }}"
-                    type="text" 
-                    class="form-control" 
-                    name="price" 
-                    placeholder="price" required>
-                @if ($errors->has('price'))
-                    <span class="text-danger text-left">{{ $errors->first('price') }}</span>
-                @endif
-            </div> -->
-            <!-- Banner image -->
-            <div>
-                <label for="ContentBanner" class="form-label">Banner</label>
-                <input   
-                    type="file" 
-                    name="ContentBanner"
-                    id ="ContentBanner"
-                    class="form-control" 
-                    accept="image/png, image/jpeg, image/gif"  
-                    required
-                    />
-            </div>
-            <!-- Category -->
-            <div class="mb-3">
-                <label for="category" class="form-label">Category</label>
-                <select id="category" name="category" class="form-control" >
-                    @foreach($propertyCategories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <!-- Type -->
-            <div id="type-container" class="mb-3">
-                <label for="type" class="form-label">Type</label>
-                <select id="type" name="type" class="form-control" >
-                    <option value="0"></option>
-                    @foreach($propertyTypes as $type)
-                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <select name="status" class="form-control" >
-                    @foreach($propertyStatuses as $status)
-                    <option value="{{ $status->id }}">{{ $status->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <!-- Featured -->
-            <div class="mb-3">
-                <label for="featured" class="form-label">Featured</label>
-                <select name="featured" class="form-control" >
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-
-            <input type="hidden" id="propertyEntryCode" name="propertyEntryCode" value="{{ $propertyEntryCode }}">
-            <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
-            <input type="hidden" id="propertyGallery" name="propertyGallery" >
-            <input type="hidden" id="propertyBanner" name="propertyBanner" >
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{{ route('content.index') }}" class="btn btn-default">Back</a>
-        </form>
-    </div>
-
-    <div class="rounded col-md-8">
-        <!-- Button trigger modal -->
-        <button id="btn-create-content" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#ContentTypeBuilderModal">
-            Add
-        </button>
-        <button id="btn-gallery-content" type="button" class="btn btn-default" data-toggle="modal" data-target="#ContentGallaryModal">
-            Gallery
-        </button>
-        <hr>
-        <div id="alert-property-info" class="alert alert-primary m-0" role="alert">
-            Empty property information.
         </div>
+    </section>
+  
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Profile  -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body">
+                            <form id="propertyForm" method="POST" action="{{ route('content.store') }}">
+                                @csrf
+                                <!-- Banner image -->
+                                <div>
+                                    <label for="ContentBanner" class="form-label">Profile</label>
+                                    <input   
+                                        type="file" 
+                                        name="ContentBanner"
+                                        id ="ContentBanner"
+                                        accept="image/png, image/jpeg, image/gif"  
+                                        required
+                                        />
+                                </div>
+                                 <!-- Name -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input value="{{ old('name') }}" 
+                                        type="text" 
+                                        class="form-control" 
+                                        name="name" 
+                                        placeholder="Name" required>
 
-        <div class="row">
-            <div id="content-container" class="container" data-sortable-id="0" aria-dropeffect="move"></div>
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger text-left">{{ $errors->first('name') }}</span>
+                                    @endif
+                                </div>
+                                <div class="mb-3">
+                                    <label for="location" class="form-label">Location</label>
+                                    <input value="{{ old('location') }}"
+                                        type="text" 
+                                        class="form-control" 
+                                        name="location" 
+                                        placeholder="Location" required>
+                                    @if ($errors->has('location'))
+                                        <span class="text-danger text-left">{{ $errors->first('location') }}</span>
+                                    @endif
+                                </div>
+                                <!-- Price -->
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <textarea 
+                                        class="form-control"
+                                        name="price" 
+                                        placeholder="Price"
+                                        rows="2"></textarea>
+                                    @if ($errors->has('price'))
+                                        <span class="text-danger text-left">{{ $errors->first('price') }}</span>
+                                    @endif
+                                </div>
+                                <!-- Description -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea 
+                                        class="form-control"
+                                        name="description" 
+                                        placeholder="Description"
+                                        rows="5" required></textarea>
+                                    <!-- <input value="{{ old('description') }}"
+                                        type="text" 
+                                        class="form-control" 
+                                        name="description" 
+                                        placeholder="description" required> -->
+                                    @if ($errors->has('description'))
+                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
+                                    @endif
+                                </div>
+                                <!-- <div class="mb-3 d-none">
+                                    <label for="price" class="form-label">price</label>
+                                    <input value="{{ old('price') }}"
+                                        type="text" 
+                                        class="form-control" 
+                                        name="price" 
+                                        placeholder="price" required>
+                                    @if ($errors->has('price'))
+                                        <span class="text-danger text-left">{{ $errors->first('price') }}</span>
+                                    @endif
+                                </div> -->
+                                
+                                <!-- Category -->
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select id="category" name="category" class="form-control" >
+                                        @foreach($propertyCategories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!-- Type -->
+                                <div id="type-container" class="mb-3">
+                                    <label for="type" class="form-label">Type</label>
+                                    <select id="type" name="type" class="form-control" >
+                                        <option value="0"></option>
+                                        @foreach($propertyTypes as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select name="status" class="form-control" >
+                                        @foreach($propertyStatuses as $status)
+                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!-- Featured -->
+                                <div class="mb-3">
+                                    <label for="featured" class="form-label">Featured</label>
+                                    <select name="featured" class="form-control" >
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+
+                                <input type="hidden" id="propertyEntryCode" name="propertyEntryCode" value="{{ $propertyEntryCode }}">
+                                <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
+                                <input type="hidden" id="propertyGallery" name="propertyGallery" >
+                                <input type="hidden" id="propertyBanner" name="propertyBanner" >
+
+                                <button type="submit" class="btn btn-primary btn-block"><b>Submit</b></button>
+                                <!-- <a href="{{ route('content.index') }}" class="btn btn-default">Back</a> -->
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.Profile -->
+ 
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Content</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Gallery</a></li>
+                            </ul>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="activity">
+                                <div id="alert-property-info" class="alert alert-primary m-0" role="alert">
+                                    Empty property information.
+                                </div>
+                                <div class="row">
+                                    <div id="content-container" class="container" data-sortable-id="0" aria-dropeffect="move"></div>
+                                </div>
+                                <hr>
+                                <button id="btn-create-content" type="button" class="btn btn-default mt-2" data-toggle="modal" data-target="#ContentTypeBuilderModal">
+                                    Add
+                                </button>
+                            </div><!-- /.tab-pane -->
+
+                            <div class="tab-pane" id="timeline">
+                                <input   
+                                    type="file" 
+                                    name="ContentGallery"
+                                    id ="ContentGallery"
+                                    accept="image/png, image/jpeg, image/gif"
+                                    multiple />
+                            </div><!-- /.tab-pane -->
+                        </div><!-- /.tab-content -->
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+        <!-- /.row -->
         </div>
-
-        
-    <div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 </div>
 
- <!-- Main Modal -->
- <div class="modal fade" id="ContentTypeBuilderModal" tabindex="-1" role="dialog" aria-labelledby="ContentTypeBuilderModalLabel"  aria-hidden="true">
+<!-- Main Modal -->
+<div class="modal fade" id="ContentTypeBuilderModal" tabindex="-1" role="dialog" aria-labelledby="ContentTypeBuilderModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -252,7 +284,6 @@
                         type="file" 
                         name="ContentTypeMedia"
                         id ="ContentTypeMedia"
-                        class="form-control" 
                         accept="image/png, image/jpeg, image/gif"
                         multiple />
                 </div>
@@ -277,19 +308,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input   
-                    type="file" 
-                    name="ContentGallery"
-                    id ="ContentGallery"
-                    class="form-control" 
-                    accept="image/png, image/jpeg, image/gif"
-                    multiple />
 
             </div>
         </div>
     </div>
 </div>
-<!-- End Modal -->
+
 @endsection
 
 @section('scripts')

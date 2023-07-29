@@ -357,4 +357,26 @@ class PropertyController extends Controller
         return $property;
     }
 
+    public function publishPropety($id) {
+        $property = Property::find($id);
+        $property->status = "published";
+        $property->save();
+        return "success";
+    }
+
+    public function draftPropety($id) {
+        $property = Property::find($id);
+        $property->status = "draft";
+        $property->save();
+        return "success";
+    }
+
+    public function deleteProperty($id) {
+        $property = Property::find($id);
+        $property->status = "deleted";
+        $property->save();
+ 
+        return "deleted successfully";
+    }
+
 }

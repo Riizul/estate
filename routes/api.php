@@ -23,3 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("data/{id}", [PropertyController::class, 'getProperty']);
 Route::get("featured", [PropertyController::class, 'getFeatured']);
 Route::get("property/{id}", [PropertyController::class, 'getProperties']);
+Route::get("publishPropety/{id}", [PropertyController::class, 'publishPropety']);
+Route::get("draftPropety/{id}", [PropertyController::class, 'draftPropety']);
+Route::get("deleteProperty/{id}", [PropertyController::class, 'deleteProperty']);
