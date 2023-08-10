@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/content">Properties</a></li>
+                <li class="breadcrumb-item"><a href="/content">Property</a></li>
                 <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
@@ -56,18 +56,33 @@
                                         <span class="text-danger text-left">{{ $errors->first('name') }}</span>
                                     @endif
                                 </div>
-                                <!-- Location -->
+                                <!-- Address -->
                                 <div class="mb-3">
-                                    <label for="location" class="form-label">Location</label>
+                                    <label for="location" class="form-label">Address</label>
                                     <input value="{{ $property->location }}"
                                         type="text" 
                                         class="form-control" 
                                         name="location" 
-                                        placeholder="location" required>
+                                        placeholder="Address" required>
 
                                     @if ($errors->has('location'))
                                         <span class="text-danger text-left">{{ $errors->first('location') }}</span>
                                     @endif
+                                </div>
+                                <!-- Location -->
+                                <div class="mb-3">
+                                    <label for="locationId" class="form-label">Location</label>
+                                    <select id="locationId" name="locationId" class="form-control" >
+                                        @foreach($locations as $item)
+                                        <option value="{{ $item->id }}"  
+                                            @if ($property->locationId == $item->id)
+                                            {{'selected="selected"'}}
+                                            @endif 
+                                        >
+                                        {{ $item->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <!-- Price -->
                                 <div class="mb-3">
@@ -169,7 +184,7 @@
                                 <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
                                 <input type="hidden" id="propertyBanner" name="propertyBanner" value="{{ $property->banner }}" >
                                 <input type="hidden" id="propertyGallery" name="propertyGallery" >
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary btn-block"><b>Update</b></button>
                             </form>
                         </div>
                     </div>
@@ -290,7 +305,6 @@
                         type="file" 
                         name="ContentTypeMedia"
                         id ="ContentTypeMedia"
-                        class="form-control" 
                         accept="image/png, image/jpeg, image/gif"
                         multiple />
                 </div>

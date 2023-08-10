@@ -14,12 +14,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Properties</h1>
+          <h1>Property</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/content">Home</a></li>
-            <li class="breadcrumb-item active">Properties</li>
+            <li class="breadcrumb-item"><a href="/content">Dashboard</a></li>
+            <li class="breadcrumb-item active">Property</li>
           </ol>
         </div>
       </div>

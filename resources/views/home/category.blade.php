@@ -9,7 +9,7 @@
             <h1 class="title-single">{{ $category }}</h1>
             <span class="color-text-a">Properties</span>
           </div>
-        </div>
+        </div> 
         <div class="col-md-12 col-lg-4">
           <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
             <ol class="breadcrumb">
@@ -31,6 +31,19 @@
   <section class="property-grid grid">
     <div class="container">
       <div class="row">
+        <div class="col-sm-12">
+          <div class="grid-option">
+            <select id="locationDropdown" class="custom-select">
+              <option value="0" selected>All</option>
+              @foreach ($locations as $location)
+                  <option value="{{ $location['locationId'] }}">
+                    {{ $location['locationName'] }}
+                  </option>
+              @endforeach
+            </select> 
+          </div>
+        </div>
+
         @foreach($properties as $item)
           @include('layouts.frontend._property')
         @endforeach
@@ -104,4 +117,30 @@
     </div>
 </div> -->
 
+@endsection
+
+@section('scripts')
+<script>
+  $(function() {
+
+    $("#locationDropdown").change(function(){
+      let properties = $(".property"),
+          location = this.value;
+
+      properties.each(function(ndx, item) {
+        let element = $(item);
+
+        if(location == "0" || location == element.data("sort")) {
+          element.show();
+        }
+        else {
+          element.hide();
+        }
+
+      });
+      
+    })
+
+  });
+</script>
 @endsection

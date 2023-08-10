@@ -6,6 +6,7 @@ use App\Models\Property;
 use App\Models\PropertyType;
 use App\Models\PropertyCategory;
 use App\Models\PropertyInformation;
+use App\Models\PropertyLocation;
 use App\Models\PropertyGallery;
 use App\Models\PropertyStatus;
 use App\Models\ContentTypeBuilder;
@@ -55,6 +56,7 @@ class PropertyController extends Controller
             'propertyCategories' => PropertyCategory::all(),
             'propertyStatuses' => PropertyStatus::all(),
             'contentTypeBuilder' => ContentTypeBuilder::all(),
+            'locations' => PropertyLocation::all(),
             'propertyEntryCode' => uniqid() . '_' . now()->timestamp
         );
             
@@ -100,7 +102,7 @@ class PropertyController extends Controller
         $property->categoryId = $request->category;
         $property->stateId = $request->status;
         $property->name = $request->name;
-        $property->locationId = 0; //BTK:for supply
+        $property->locationId = $request->locationId;
         $property->location =  $request->location;
         $property->price =  is_null($request->price)? "" : $request->price;
         $property->description =  $request->description;
@@ -165,6 +167,7 @@ class PropertyController extends Controller
             'propertyTypes' => PropertyType::all(),
             'propertyCategories' => PropertyCategory::all(),
             'propertyStatuses' => PropertyStatus::all(),
+            'locations' => PropertyLocation::all(),
             'contentTypeBuilder' => ContentTypeBuilder::all(),
             'propertyGallery' => PropertyGallery::where("propertyId",'=', $property)->get(),
             'propertyContent' => PropertyInformation::where("propertyId",'=', $property)->orderByRaw('sort asc')->get(),
@@ -202,7 +205,7 @@ class PropertyController extends Controller
 
     public function update(Request $request, $id)
     {
-    //   dd($request);
+        // dd($request);
 
         //Information
         $property = Property::find($id);
@@ -210,6 +213,7 @@ class PropertyController extends Controller
         $property->categoryId = $request->category;
         $property->stateId = $request->status;
         $property->name = $request->name;
+        $property->locationId = $request->locationId;
         $property->location =  $request->location;
         $property->price =  is_null($request->price)? "" : $request->price;
         $property->description =  $request->description;
@@ -261,7 +265,8 @@ class PropertyController extends Controller
         return redirect('/content/'. $id. '/edit');
     }
 
-    public function getProperties($id) {
+    public function getProperties($id) 
+    {
         switch ($id) {
             case "house-and-lot":
                 $category = 1;
@@ -277,10 +282,21 @@ class PropertyController extends Controller
                 return Property::where("status",'=', 'published')->get(); 
         }
 
-        $properties = Property::where([
-            ["categoryId",'=', $category],
-            ["status",'=', 'published'],
-        ])->get();
+        // $properties = Property::where([
+        //     ["categoryId",'=', $category],
+        //     ["status",'=', 'published'],
+        // ])->get();
+
+
+        $properties = Property::leftJoin('property_locations', function($join) {
+                $join->on('properties.locationId', '=', 'property_locations.id');
+            })
+            ->where([
+                ["categoryId",'=', $category],
+                ["status",'=', 'published'],
+            ])
+            ->select('properties.*', 'property_locations.name as locationName')
+            ->get();
 
         foreach ($properties as $item){ 
             $item->category = PropertyCategory::where('id','=', $item->categoryId)->get()->first();

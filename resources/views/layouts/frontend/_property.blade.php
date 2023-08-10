@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="property col-md-4" data-sort="{{ $item->locationId }}">
     <div class="box-shadow rounded overflow-hidden m-b-30">
         <a href="{{ env('APP_URL') }}{{ $item->uri }}" 
             class="card-box-a card-shadow">

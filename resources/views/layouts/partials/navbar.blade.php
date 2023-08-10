@@ -30,33 +30,33 @@
   <div class="sidebar">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul id="nav" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="/content" class="nav-link active">
+          <a href="/content" data-id="content" class="nav-link">
             <i class="nav-icon fas fa-home"></i>
-            <p>Properties</p>
+            <p>Property</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/content" class="nav-link">
+          <a href="/location" data-id="location" class="nav-link">
             <i class="nav-icon fas fa-location-arrow"></i>
             <p>Location</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/content" class="nav-link">
+          <a href="/type" data-id="type" class="nav-link">
             <i class="nav-icon fas fa-layer-group"></i>
             <p>Type</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="/content" class="nav-link">
+        <!-- <li class="nav-item">
+          <a href="/setting" data-id="setting" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
             <p>Setting</p>
           </a>
-        </li>
+        </li> -->
         
       </ul>
     </nav>

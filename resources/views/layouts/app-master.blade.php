@@ -35,6 +35,8 @@
   <script src="{!! url('assets/AdminLTE/dist/js/adminlte.min.js') !!}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="{!! url('assets/AdminLTE/dist/js/demo.js') !!}"></script>
+   <!-- Costum script -->
+   <script src="{!! url('assets/js/app.js') !!}"></script>
   <!-- Page specific script -->
   @yield('scripts')
 </body>

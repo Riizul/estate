@@ -92,6 +92,31 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get('/{id}/publish', 'PropertyController@publish')->name('content.publish');
         });
 
+        /**
+         * Location Routes
+         */
+        Route::group(['prefix' => 'location'], function() {
+            Route::get('/', 'LocationController@index')->name('location.index');
+            Route::post('/create', 'LocationController@store')->name('location.store');
+            Route::get('/{todo}/delete', 'LocationController@destroy')->name('location.destroy');
+        });
+
+        /**
+         * Type Routes
+         */
+        Route::group(['prefix' => 'type'], function() {
+            Route::get('/', 'PropertyTypeController@index')->name('type.index');
+            Route::post('/create', 'PropertyTypeController@store')->name('type.store');
+            Route::get('/{todo}/delete', 'PropertyTypeController@destroy')->name('type.destroy');
+        });
+
+        /**
+         * Setting Routes
+         */
+        Route::group(['prefix' => 'setting'], function() {
+            Route::get('/', 'SettingController@index')->name('setting.index');
+        });
+
        
         Route::post('/upload', 'UploadController@store');
         Route::get('/hello', 'UploadController@index');

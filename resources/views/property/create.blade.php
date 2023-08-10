@@ -19,7 +19,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/content">Properties</a></li>
+                <li class="breadcrumb-item"><a href="/content">Property</a></li>
                 <li class="breadcrumb-item active">Create</li>
                 </ol>
             </div>
@@ -61,16 +61,26 @@
                                         <span class="text-danger text-left">{{ $errors->first('name') }}</span>
                                     @endif
                                 </div>
+                                <!-- Address -->
                                 <div class="mb-3">
-                                    <label for="location" class="form-label">Location</label>
+                                    <label for="location" class="form-label">Address</label>
                                     <input value="{{ old('location') }}"
                                         type="text" 
                                         class="form-control" 
                                         name="location" 
-                                        placeholder="Location" required>
+                                        placeholder="Address" required>
                                     @if ($errors->has('location'))
                                         <span class="text-danger text-left">{{ $errors->first('location') }}</span>
                                     @endif
+                                </div>
+                                <!-- Location -->
+                                <div class="mb-3">
+                                    <label for="locationId" class="form-label">Location</label>
+                                    <select id="locationId" name="locationId" class="form-control" >
+                                        @foreach($locations as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <!-- Price -->
                                 <div class="mb-3">

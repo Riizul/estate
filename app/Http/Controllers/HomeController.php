@@ -23,9 +23,37 @@ class HomeController extends Controller
         $slug = Route::current()->uri(); 
         $category = PropertyCategory::where('slug','=', $slug)->get()->first()->name; 
         $properties = app(PropertyController::class)->getProperties($slug);
-        $data=array(
+
+        // Convert the array to a collection
+        $propertiesCollection = collect($properties);
+
+        // Get unique values of the 'location_name' field, excluding null values
+        // $locations = $propertiesCollection->pluck('location_name')
+        //     ->filter(function ($location) {
+        //         return $location !== null;
+        //     })
+        //     ->unique()
+        //     ->values()
+        //     ->all();
+
+        // Filter unique 'locationId'
+        $uniqueLocations = $propertiesCollection->filter(function ($location) {
+            return $location->locationId !== 0;
+        })
+        ->unique('locationId')->values();
+
+        // Create a new collection with 'locationId' and 'locationName' fields
+        $locationData = $uniqueLocations->map(function ($property) {
+            return [
+                'locationId' => $property['locationId'],
+                'locationName' => $property['locationName'],
+            ];
+        })->values()->all();
+
+        $data = array(
             'slug' => $slug, 
             'category' => $category,
+            'locations' => $locationData,
             'properties' => $properties
         );
 

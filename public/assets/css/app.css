@@ -73,3 +73,11 @@ main > .container {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
 }
+
+.dataTables_filter label {
+  float: left;
+}
+
+.dataTables_filter input {
+  margin: 0 !important
+}
