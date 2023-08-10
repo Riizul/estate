@@ -81,3 +81,24 @@ main > .container {
 .dataTables_filter input {
   margin: 0 !important
 }
+
+.m-update-btn button {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) 
+{
+
+  #propertyGrid_filter input {
+    width: 100%;
+  }
+
+  #propertyForm [type="submit"] {
+    display: none;
+  }
+
+  .m-update-btn button {
+    display: block;
+  }
+
+}

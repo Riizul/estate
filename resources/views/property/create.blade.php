@@ -212,6 +212,11 @@
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
+
+                <div class="col-md-12 m-update-btn">
+                    <button class="btn btn-primary btn-block"><b>Submit</b></button>
+                </div>
+                <!-- /.col -->
             </div>
         <!-- /.row -->
         </div>
