@@ -647,25 +647,7 @@
     })
     
     $("#btn-create-content").click(function () {
-        contentTypeEnumaration = [];
-        contentTypeMedia= [];
-
-        $("#contentType")
-            .val(1)
-            .attr("disabled", false);
-        $("#ContentTypeHeader").val("");
-        $("#ContentTypeParagraph").val("");
-        $(".content-type-element").hide();
-        $("#type-header-container").show();
-        $("#contentTypeEnumListGroup").empty();
-        $("#btn-action")
-            .data("id", "add")
-            .data("append", "0")
-            .text("Add");
-        $("#btn-delete").hide();
-
-        pond.removeFiles();
-
+        resetContentBuilderForm()
     })
 
     $('#btn-delete').click(function () {

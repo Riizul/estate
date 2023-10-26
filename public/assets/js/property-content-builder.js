@@ -24,7 +24,7 @@ function contentBuilder (obj, arg) {
             if(arg) { 
                 template = '<div class="item-wrapper" data-uid='+ obj.id +' data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false">';
                     template += '<div data-id='+ obj.id +' data-type=2 data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false" style="" class="item bg-light p-3 rounded mb-1">';
-                        template += obj.value.replaceAll('\n','<br/>');
+                        template += obj.value;
                     template += '</div>';
                     template += toolbar.format(obj.id);
                 template += '</div>';
@@ -153,6 +153,7 @@ function contentBuilderEvents() {
             $("#btn-delete").hide();
 
             pond.removeFiles();
+            editor.setData();
         })
      
 }
@@ -231,6 +232,28 @@ function addContentItem(e) {
         }
 
         $("#alert-property-info").hide();
+}
+
+function resetContentBuilderForm() {
+    contentTypeEnumaration = [];
+    contentTypeMedia= [];
+
+    $("#contentType")
+        .val(1)
+        .attr("disabled", false);
+    $("#ContentTypeHeader").val("");
+    $("#ContentTypeParagraph").val("");
+    $(".content-type-element").hide();
+    $("#type-header-container").show();
+    $("#contentTypeEnumListGroup").empty();
+    $("#btn-action")
+        .data("id", "add")
+        .data("append", "0")
+        .text("Add");
+    $("#btn-delete").hide();
+
+    pond.removeFiles();
+    editor.setData();
 }
 
 function getItemContentToolbar() {
