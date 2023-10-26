@@ -55,7 +55,7 @@ class PropertyController extends Controller
             'propertyTypes' => PropertyType::all(),
             'propertyCategories' => PropertyCategory::all(),
             'propertyStatuses' => PropertyStatus::all(),
-            'contentTypeBuilder' => ContentTypeBuilder::all(),
+            'contentTypeBuilder' => ContentTypeBuilder::where("id",'!=', '3')->get(),
             'locations' => PropertyLocation::all(),
             'propertyEntryCode' => uniqid() . '_' . now()->timestamp
         );
@@ -160,17 +160,18 @@ class PropertyController extends Controller
 
     public function edit($property) 
     {
-        // dd(PropertyGallery::where("propertyId",'=', $property)->get());
-        
+        $propertyContent = PropertyInformation::where("propertyId",'=', $property)->orderByRaw('sort asc')->get();
+
         return view('property.edit', [
             'property' => Property::where("id",'=', $property)->get()->first(),
             'propertyTypes' => PropertyType::all(),
             'propertyCategories' => PropertyCategory::all(),
             'propertyStatuses' => PropertyStatus::all(),
             'locations' => PropertyLocation::all(),
-            'contentTypeBuilder' => ContentTypeBuilder::all(),
+            'contentTypeBuilder' => ContentTypeBuilder::where("id",'!=', '3')->get(),
             'propertyGallery' => PropertyGallery::where("propertyId",'=', $property)->get(),
-            'propertyContent' => PropertyInformation::where("propertyId",'=', $property)->orderByRaw('sort asc')->get(),
+            'propertyContent' => $propertyContent,
+            'parseContent' => json_encode($propertyContent)
         ]);
     }
 
@@ -235,7 +236,7 @@ class PropertyController extends Controller
             switch ($item['contentTypeId']) {
                 case 1:
                 case 2:
-                    $information->value = $item['value'];
+                    $information->value =str_replace("\n","", $item['value']);
                     break;
                 default:
                     $information->value = json_encode($item['value']);

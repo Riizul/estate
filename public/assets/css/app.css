@@ -65,13 +65,29 @@ main > .container {
 
 #content-container { margin-bottom: 10px}
 #content-container p, #content-container ul {margin-bottom:0}
-#content-container .item h4 { margin:20px 0 10px !important}
-#content-container .item img { margin:5px; width: 100%}
+#content-container .item h4 { margin:10px 0 10px !important}
+#content-container .item img { width: 100%}
 #content-container .item:hover {
+    border: 1px solid #eee;
     cursor: pointer;
     border-radius: 3px; 
-    --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
+}
+
+.item-wrapper {
+  margin-bottom: 10px;
+}
+
+.item-wrapper .item-menu {
+  margin:10px 0 5px;
+}
+
+.item-wrapper .hide {
+  display: none;
+}
+
+
+.enumeration-container {
+  padding: 20px 0;
 }
 
 .dataTables_filter label {
@@ -84,6 +100,10 @@ main > .container {
 
 .m-update-btn button {
   display: none;
+}
+
+.fs-12 {
+  font-size: 12px;
 }
 
 @media only screen and (max-width: 600px) 

@@ -207,7 +207,12 @@
                                         Empty property information.
                                     </div>
                                     <div class="row">
-                                        <div id="content-container" class="container" data-sortable-id="0" aria-dropeffect="move"></div>
+                                        <div id="content-container" 
+                                            data-content="{{ $parseContent }}"
+                                            class="container" 
+                                            data-sortable-id="0" 
+                                            aria-dropeffect="move">
+                                        </div>
                                     </div>
                                     <hr>
                                     <button id="btn-create-content" type="button" class="btn btn-default mt-2" data-toggle="modal" data-target="#ContentTypeBuilderModal">
@@ -346,6 +351,7 @@
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> -->
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
+<script src="{!! url('assets/js/property-content-builder.js') !!}"></script>
 <script>
     let propertyContent = [],
         propertyPath = "/" + $('#propertyToken').val() + "/";
@@ -529,96 +535,42 @@
         }
     });
     //End FilePond ContentMedia
-
-    //Events
-    function contentBuilder (obj, arg) {
-        let template = "";
-        switch (obj.contentTypeId) {
-            //Header
-            case 1:
-                if(arg) {
-                    template = '<div data-id='+ obj.id +' data-type=1 data-value='+ obj.value +' data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false" style="" class="item">';
-                    template += '<h4>'+ obj.value +'</h4>';
-                    template += '</div>';
-                }
-                else 
-                    $(".item[data-id=" + obj.id + "] h4").text(obj.value)
-                
-                break;
-            //Paragraph
-            case 2:
-                if(arg) {
-                    template = '<div data-id='+ obj.id +' data-type=2 data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false" style="" class="item">';
-                    template += '<p>'+ obj.value.replaceAll('\n','<br/>') +'</p>';
-                    template += '</div>';
-                }
-                else 
-                    $(".item[data-id=" + obj.id + "] p").html(obj.value.replaceAll('\n','<br/>'))
-
-                break;
-            //Enumeration
-            case 3:
-                let percolumn = obj.value.length > 5 ? Math.ceil(obj.value.length / obj.attribute.column) : 1,
-                    cola = "", colb = "", list = "";
-
-                //build column
-                obj.value.forEach(function (item, ndx) {
-                    if(percolumn == 1 || ndx < percolumn)
-                        cola += `<li>`+ item +`</li>`;
-                    else
-                        colb += `<li>` + item + `</li>`;
-                })      
-
-                //build list 
-                for(let i = 0; i < obj.attribute.column; i++){
-                    list += `<div class="col-md-` + (percolumn == 1 ? `12` : `6`) + `"><ul>`;
-                    list += i == 0 ? cola : colb;
-                    list += `</ul></div>`;
-                }
-
-                if(arg) 
-                    template = `<div data-id=`+ obj.id +` data-type=3 class="row g-0 item">` + list + `</div>`;
-                else 
-                    $(".item[data-id=" + obj.id + "]")
-                        .empty()
-                        .append(list);
-               
-                break;
-            //Media
-            case 4:
-
-                let imgs = "";
-                obj.value.forEach(function (item) {
-                    //BTK :: for deployment directory
-                    // template += `<img src="{{ asset('storage/public/tmp/` + item + `') }}" alt="" title=""></a>`
-                    imgs += `<img src="{{ asset('storage/tmp` + item + `') }}" alt="" title=""></a>`
-                })  
-
-                if(arg) 
-                    template = `<div data-id=`+ obj.id +` data-type=4 class="row g-0 item">` + imgs + `</div>`;
-                else 
-                    $(".item[data-id=" + obj.id + "]")
-                        .empty()
-                        .append(imgs);
-                break;
-
-        }
-
-        $("#content-container").append(template);
-        $('#ContentTypeBuilderModal').modal('hide');
-    }
-
+    
     //Initiate content builder
-    let raw = '<?php echo $propertyContent; ?>';
-    propertyContent = JSON.parse(raw.replaceAll('\n','<br/>').replaceAll('"[','[').replaceAll(']"',']').replaceAll('"{','{').replaceAll('}"','}'));
+    let canvas = document.getElementById('content-container');
+    propertyContent = JSON.parse(canvas.dataset.content);
     propertyContent.forEach((obj) => {
         obj.status = 1;
 
-        if(obj.contentTypeId != 3) 
+        if(obj.contentTypeId < 3) 
             delete obj.attribute;
+
+        switch (obj.contentTypeId) {
+            case 3:
+                obj.value = JSON.parse(obj.value)
+                obj.attribute = JSON.parse(obj.attribute)
+                break;
+            case 4:
+                obj.value = JSON.parse(obj.value)
+                break;
+        
+        } 
 
         contentBuilder(obj, true)
     })
+
+    // let raw = '<?php echo $propertyContent; ?>';
+    // propertyContent = JSON.parse(raw.replaceAll('\n','<br/>').replaceAll('"[','[').replaceAll(']"',']').replaceAll('"{','{').replaceAll('}"','}'));
+    // propertyContent.forEach((obj) => {
+    //     obj.status = 1;
+
+    //     if(obj.contentTypeId != 3) 
+    //         delete obj.attribute;
+
+    //     contentBuilder(obj, true)
+    // })
+
+
 
     if(propertyContent.length > 0)
         $("#alert-property-info").hide();
@@ -663,7 +615,8 @@
                 $("#ContentTypeHeader").val(item.value)
                 break;
             case 2:
-                $("#ContentTypeParagraph").val(item.value.replaceAll('<br/>','\n'));
+                // $("#ContentTypeParagraph").val(item.value.replaceAll('<br/>','\n'));
+                editor.setData(item.value);
                 break;
             case 3:
                 let container = $('#contentTypeEnumListGroup');
@@ -719,70 +672,7 @@
     })
 
     $('#btn-action').click(function () {
-        let item = {},
-            type = parseInt($("#contentType").val()),
-            action = $(this).data("id");
-
-        item.id = propertyContent.length;
-        item.contentTypeId = type;
-        item.status = 1;
-
-        switch (type) {
-            //Header
-            case 1:
-                item.value = $("#ContentTypeHeader").val();
-                break;
-            //Paragraph
-            case 2:
-                item.value = $("#ContentTypeParagraph").val();
-                break;
-            //Enumeration
-            case 3:
-                contentTypeEnumaration = [];
-                let raw =  $("#contentTypeEnumListGroup").find(".list-group-item");
-                raw.each(function(n, e) {
-                    let id = $(e).data('id'),
-                        value = $(e).data('value');
-
-                    contentTypeEnumaration.push(value)
-                })
-                
-                item.value = contentTypeEnumaration;
-                item.attribute = { column: $('#ContentTypeEnumColumn').val() }
-                break;
-            //Media
-            case 4:
-                contentTypeMedia = [];
-                pond.getFiles().forEach(function (item) {
-                    if(!contentTypeMedia.includes(item))
-                        contentTypeMedia.push("/" + $('#propertyToken').val() + "/" + item.filename);
-                })
-
-                item.value = contentTypeMedia;
-
-                //BTK :: not nessesarry
-                //populate media gallery
-                // contentTypeMedia.forEach((file) => {
-                //     if(!contentMediaGallery.includes(file))
-                //         contentMediaGallery.push(file);
-                // })
-
-                break;
-
-        }
-
-        if(action == "add") {
-            propertyContent.push(item);
-            contentBuilder(item, true);
-        }
-        else {
-            item.id = $(this).data("item");
-            propertyContent[propertyContent.map(e => e.id).indexOf(item.id)] = item; 
-            contentBuilder(item, false);
-        }
-
-        $("#alert-property-info").hide();
-        console.log(propertyContent);
+        addContentItem(this);
     })
 
     $('#contentTypeEnumBtn').click(function () {
@@ -867,6 +757,7 @@
         $("#contentTypeEnumListGroup").empty();
         $("#btn-action")
             .data("id", "add")
+            .data("append", "0")
             .text("Add");
         $("#btn-delete").hide();
 
@@ -917,6 +808,19 @@
                 })
                 
             })
+        });
+    })(jQuery);
+</script>
+
+<script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('ckeditor/samples/js/sample.js')}}"></script>
+<script>
+    jQuery.noConflict();
+    (function( $ ) {
+        $(function() {
+            initSample();
+            // Get the editor instance that we want to interact with.
+            editor = CKEDITOR.instances.ContentTypeParagraph;
         });
     })(jQuery);
 </script>

@@ -1,6 +1,16 @@
 # EB Estate 
 Real Estate Site
 
+# To do
+- add editor on content builder paragraph
+    * edit page (done & deployed)
+    * create page 
+- error content builder enumeration
+- update property creation
+- image resize feature
+- content editor add option for break line
+
+
 # Production
 Run script 
 - php artisan storage:link
@@ -38,5 +48,5 @@ run command SSH
 ln -s "[source directory]" "[target directory]"
 
 example:
-ln -s "/home/u885205984/domains/datparse.com/public_html/ebeye/parser/storage/app/public" "/home/u885205984/domains/datparse.com/public_html/ebeye/storage"
+ln -s "/home/u885205984/domains/ebeyejane.com/public_html/parser/storage/app/public" "/home/u885205984/domains/ebeyejane.com/public_html/storage"
  
