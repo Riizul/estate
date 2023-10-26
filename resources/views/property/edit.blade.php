@@ -575,37 +575,8 @@
 
     if(propertyContent.length > 0)
         $("#alert-property-info").hide();
-
-    $("#contentType").change(function () {
-
-        $(".content-type-element").hide();
-        $("#ContentTypeHeader").empty();
-        $("#ContentTypeParagraph").empty();
-
-        switch (this.value) {
-            //Header
-            case "1":
-                $("#type-header-container").show();
-                break;
-            //Paragraph
-            case "2":
-                $("#type-paragraph-container").show();
-                break;
-            //Enumeration
-            case "3":
-                $("#type-enumaration-container").show();
-                break;
-            //Media
-            case "4":
-                $("#type-media-container").show();
-                break;
-
-        }
-    })
    
-    $('#btn-action').click(function () {
-        addContentItem(this);
-    })
+
 
     $('#contentTypeEnumBtn').click(function () {
         let input = $('#ContentTypeEnumaration');

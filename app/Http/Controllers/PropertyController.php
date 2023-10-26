@@ -57,7 +57,7 @@ class PropertyController extends Controller
             'propertyStatuses' => PropertyStatus::all(),
             'contentTypeBuilder' => ContentTypeBuilder::where("id",'!=', '3')->get(),
             'locations' => PropertyLocation::all(),
-            'propertyEntryCode' => uniqid() . '_' . now()->timestamp
+            'propertyToken' => uniqid() . '_' . now()->timestamp
         );
             
         return view('property.create')->with($data);
@@ -111,22 +111,20 @@ class PropertyController extends Controller
         $property->banner = $request->propertyBanner;
         $property->featured = $request->featured;
         $property->status = 'draft';
-        $property->token = $request->propertyEntryCode;
+        $property->token = $request->propertyToken;
         $property->save();
 
         $propertyContent = json_decode($request->propertyContentBuilder, true);
         foreach ($propertyContent as $item){  
-            // dd($item['type']);
- 
             $information = new PropertyInformation;
             $information->propertyId = $property->id;
-            $information->contentTypeId = $item['type'];
+            $information->contentTypeId = $item['contentTypeId'];
             $information->sort = $item['sort'];
 
-            switch ($item['type']) {
+            switch ($item['contentTypeId']) {
                 case 1:
                 case 2:
-                    $information->value = $item['value'];
+                    $information->value =str_replace("\n","", $item['value']);
                     break;
                 default:
                     $information->value = json_encode($item['value']);

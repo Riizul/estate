@@ -160,7 +160,7 @@
                                     </select>
                                 </div>
 
-                                <input type="hidden" id="propertyEntryCode" name="propertyEntryCode" value="{{ $propertyEntryCode }}">
+                                <input type="hidden" id="propertyToken" name="propertyToken" value="{{ $propertyToken }}">
                                 <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
                                 <input type="hidden" id="propertyGallery" name="propertyGallery" >
                                 <input type="hidden" id="propertyBanner" name="propertyBanner" >
@@ -337,10 +337,12 @@
 
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
+<script src="{!! url('assets/js/property-content-builder.js') !!}"></script>
+
 <script>
 
     let propertyContent = [],
-        propertyPath = "/" + $('#propertyEntryCode').val() + "/";
+        propertyPath = "/" + $('#propertyToken').val() + "/";
         contentTypeEnumaration = [],
         contentTypeMedia = [],
         contentMediaGallery = [];
@@ -365,7 +367,7 @@
             load: '/storage/tmp',
             allowRemove: true,
             process: {
-                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyEntryCode"]').value,
+                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyToken"]').value,
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -411,7 +413,7 @@
             load: '/storage/tmp',
             allowRemove: true,
             process: {
-                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyEntryCode"]').value,
+                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyToken"]').value,
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -467,7 +469,7 @@
             load: '/storage/tmp',
             allowRemove: true,
             process: {
-                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyEntryCode"]').value,
+                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyToken"]').value,
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -477,7 +479,7 @@
 
                     //set banner
                     pondBanner.getFiles().forEach(function (item) {
-                        let path =  "/" + document.querySelector('input[id="propertyEntryCode"]').value + "/" + item.filename;
+                        let path =  "/" + document.querySelector('input[id="propertyToken"]').value + "/" + item.filename;
                         $("#propertyBanner").attr("value", path);
                     })
                     
@@ -510,7 +512,7 @@
     });
     //End FilePond Banner
 
-    function contentBuilder (obj, arg) {
+    function contentBuilder_old (obj, arg) {
         let template = "";
         switch (obj.type) {
             //Header
@@ -589,72 +591,74 @@
     }
 
     $('#btn-action').click(function () {
-        let item = {},
-            type = parseInt($("#contentType").val()),
-            action = $(this).data("id");
+        addContentItem(this);
 
-        item.id = propertyContent.length;
-        item.type = type;
-        item.status = 1;
+        // let item = {},
+        //     type = parseInt($("#contentType").val()),
+        //     action = $(this).data("id");
 
-        switch (type) {
-            //Header
-            case 1:
-                item.value = $("#ContentTypeHeader").val();
-                break;
-            //Paragraph
-            case 2:
-                item.value = $("#ContentTypeParagraph").val();
-                break;
-            //Enumeration
-            case 3:
-                let raw =  $("#contentTypeEnumListGroup").find(".list-group-item"),
-                    sorted = [];
+        // item.id = propertyContent.length;
+        // item.type = type;
+        // item.status = 1;
 
-                raw.each(function(n, e) {
-                    let id = $(e).data('id'),
-                        value = $(e).data('value');
-                    sorted.push(value)
-                })
+        // switch (type) {
+        //     //Header
+        //     case 1:
+        //         item.value = $("#ContentTypeHeader").val();
+        //         break;
+        //     //Paragraph
+        //     case 2:
+        //         item.value = $("#ContentTypeParagraph").val();
+        //         break;
+        //     //Enumeration
+        //     case 3:
+        //         let raw =  $("#contentTypeEnumListGroup").find(".list-group-item"),
+        //             sorted = [];
+
+        //         raw.each(function(n, e) {
+        //             let id = $(e).data('id'),
+        //                 value = $(e).data('value');
+        //             sorted.push(value)
+        //         })
                 
-                item.value = sorted;
-                item.model= { column: $('#ContentTypeEnumColumn').val() }
-                break;
-            //Media
-            case 4:
-                contentTypeMedia = [];
-                pond.getFiles().forEach(function (item) {
-                    if(!contentTypeMedia.includes(item))
-                        contentTypeMedia.push("/" + $('#propertyEntryCode').val() + "/" + item.filename);
-                })
+        //         item.value = sorted;
+        //         item.model= { column: $('#ContentTypeEnumColumn').val() }
+        //         break;
+        //     //Media
+        //     case 4:
+        //         contentTypeMedia = [];
+        //         pond.getFiles().forEach(function (item) {
+        //             if(!contentTypeMedia.includes(item))
+        //                 contentTypeMedia.push("/" + $('#propertyEntryCode').val() + "/" + item.filename);
+        //         })
 
-                item.value = contentTypeMedia;
+        //         item.value = contentTypeMedia;
 
-                //BTK :: not nessesarry
-                //populate media gallery
-                // contentTypeMedia.forEach((file) => {
-                //     if(!contentMediaGallery.includes(file))
-                //         contentMediaGallery.push(file);
-                // })
+        //         //BTK :: not nessesarry
+        //         //populate media gallery
+        //         // contentTypeMedia.forEach((file) => {
+        //         //     if(!contentMediaGallery.includes(file))
+        //         //         contentMediaGallery.push(file);
+        //         // })
 
-                break;
+        //         break;
 
-        }
+        // }
 
-        if(action == "add") {
-            propertyContent.push(item);
-            contentBuilder(item, true);
-        }
-        else {
-            item.id = $(this).data("item");
-            propertyContent[item.id] = item; 
-            contentBuilder(item, false);
-        }
+        // if(action == "add") {
+        //     propertyContent.push(item);
+        //     contentBuilder(item, true);
+        // }
+        // else {
+        //     item.id = $(this).data("item");
+        //     propertyContent[item.id] = item; 
+        //     contentBuilder(item, false);
+        // }
         
 
-        $("#alert-property-info").hide();
+        // $("#alert-property-info").hide();
 
-        console.log(propertyContent);
+        // console.log(propertyContent);
     })
 
     $('#btn-delete').click(function () {
@@ -892,6 +896,19 @@
 
             $( "#contentTypeEnumListGroup" ).sortable();
             $( "#contentTypeEnumListGroup" ).disableSelection();
+        });
+    })(jQuery);
+</script>
+
+<script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('ckeditor/samples/js/sample.js')}}"></script>
+<script>
+    jQuery.noConflict();
+    (function( $ ) {
+        $(function() {
+            initSample();
+            // Get the editor instance that we want to interact with.
+            editor = CKEDITOR.instances.ContentTypeParagraph;
         });
     })(jQuery);
 </script>

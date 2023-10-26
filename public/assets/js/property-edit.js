@@ -92,3 +92,7 @@ $("#contentType").change(function () {
 
     }
 })
+
+$('#btn-action').click(function () {
+    addContentItem(this);
+})
