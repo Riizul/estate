@@ -168,7 +168,7 @@ class PropertyController extends Controller
             'propertyCategories' => PropertyCategory::all(),
             'propertyStatuses' => PropertyStatus::all(),
             'locations' => PropertyLocation::all(),
-            'contentTypeBuilder' => ContentTypeBuilder::where("id",'!=', '3')->get(),
+            'contentTypeBuilder' => ContentTypeBuilder::all(),
             'propertyGallery' => PropertyGallery::where("propertyId",'=', $property)->get(),
             'propertyContent' => $propertyContent,
             'parseContent' => json_encode($propertyContent)

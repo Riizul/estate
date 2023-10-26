@@ -60,9 +60,6 @@ main > .container {
 .pull-left { float: left !important;}
 .pull-right {float: right !important}
 
-.content-type-element { display:none }
-
-
 #content-container { margin-bottom: 10px}
 #content-container p, #content-container ul {margin-bottom:0}
 #content-container .item h4 { margin:10px 0 10px !important}
