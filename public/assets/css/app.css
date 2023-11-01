@@ -118,4 +118,111 @@ main > .container {
     display: block;
   }
 
+  
+  .thumbnails-2 {
+    height: 200px !important;
+  }
+
+  .thumbnails-3 {
+    height: 100px !important;
+  }
+}
+
+.column-1 {
+  float: left;
+  width: 100%;
+  padding: 5px;
+}
+
+.column-2 {
+  float: left;
+  width: 49.99%;
+  padding: 5px;
+}
+
+.column-3 {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+.column-4 {
+  float: left;
+  width: 32.80%;
+  padding: 5px;
+}
+
+.thumbnails-1 {
+  height: auto;
+}
+
+.thumbnails-2 {
+  height: 250px;
+}
+
+.thumbnails-3 {
+  height: 200px;
+}
+
+.thumbnails-4 {
+  height: 150px;
+}
+
+.box-shadow {
+  box-shadow: 0 -1px 19px 0 rgb(38 42 76 / 8%);
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 253 253 / var(--tw-bg-opacity));
+}
+.rounded {
+  border-radius: 0.25rem;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+
+
+
+.overflow-hidden {
+  overflow: hidden;
+}
+.relative {
+  position: relative;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.object-center {
+  -o-object-position: center;
+  /* object-position: center; */
+}
+.object-cover {
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+
+.container-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }

@@ -2,14 +2,14 @@
 Real Estate Site
 
 # To do
-- add editor on content builder paragraph
-    * edit page (done & deployed)
-    * create page 
-- error content builder enumeration
-- update property creation
-- image resize feature
-- content editor add option for break line
-
+* Property viewing screen remove black header when scrolled   
+* Content builder paragraph 
+    - add font size
+    - 
+* image resize feature 
+* create property check if slug already exist 
+    - if yes rename slug of delete property
+    - else prompt that slug already taken
 
 # Production
 Run script 

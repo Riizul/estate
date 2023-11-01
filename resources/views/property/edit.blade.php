@@ -1,8 +1,12 @@
 @extends('layouts.app-master')
 
 @section('styles')
+<!-- filepond  -->
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+
+<!-- Ekko Lightbox -->
+<link rel="stylesheet" href="{!! url('assets/AdminLTE/plugins/ekko-lightbox/ekko-lightbox.css') !!}">
 @endsection
 
 @section('content')
@@ -310,13 +314,267 @@
                 </div>
                 <!-- ContentTypeMedia -->
                 <div id="type-media-container" class="mb-3 content-type-element">
-                    <label for="ContentTypeMedia" class="form-label">File upload</label>
-                    <input   
-                        type="file" 
-                        name="ContentTypeMedia"
-                        id ="ContentTypeMedia"
-                        accept="image/png, image/jpeg, image/gif"
-                        multiple />
+                    <label class="form-label">Thumbnails</label>
+                    <select 
+                        name="ContentTypeMediaImageColumn" 
+                        id="ContentTypeMediaImageColumn" 
+                        class="form-control mb-3"
+                        >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <div class="row mt-4">
+                        <nav class="w-100">
+                        <div class="nav nav-tabs" id="product-tab" role="tablist">
+                            <a class="nav-item nav-link active" 
+                                id="product-desc-tab" 
+                                data-toggle="tab" href="#product-desc" role="tab" 
+                                aria-controls="product-desc" 
+                                aria-selected="true">
+                                Gallery
+                            </a>
+                            <a class="nav-item nav-link" 
+                                id="product-comments-tab" 
+                                data-toggle="tab" 
+                                href="#product-comments" role="tab" 
+                                aria-controls="product-comments" 
+                                aria-selected="false">
+                                Upload
+                            </a>
+                        </div>
+                        </nav>
+                        <div class="tab-content p-3  w-100" id="nav-tabContent">
+                            <div class="tab-pane fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
+                                <div id="media-collection" 
+                                    class="container-flex" 
+                                    data-sortable-id="0" 
+                                    aria-dropeffect="move">
+
+                               </div>
+                            
+                                <!-- *********************************************** -->
+                                    <div id="gallla" style="display:none"
+                                        class="row_c" 
+                                        data-sortable-id="0" 
+                                        aria-dropeffect="move">
+                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500"
+                                                        href="https://unsplash.it/1200/768.jpg?image=251"
+                                                        data-toggle="lightbox" 
+                                                        data-title="sample 1 - white" 
+                                                        data-gallery="gallery"
+                                                        >
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579546452.jpg" 
+                                                                    alt="" 
+                                                                    class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579546452
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500"
+                                                        href="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579565654.jpg"
+                                                        data-toggle="lightbox" 
+                                                        data-title="sample 1 - white" 
+                                                        data-gallery="gallery"
+                                                        >
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579565654.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579565654
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579564088.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579564088
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579562156.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579562156
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579560668.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579560668
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579557258.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579557258
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579558737.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579558737
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579555220.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579555220
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579551922.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579551922
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579548603.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579548603
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579546452.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579546452
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="column-3">
+                                                <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                                    <a class="group transition-all duration-500">
+                                                        <div class="thumbnails-3  relative overflow-hidden">
+                                                            <img src="https://propertysearchph.com/storage/tmp/%2F652f20cf46dbb_1697587407%2FFB_IMG_1697579544710.jpg" onclick="imgonclick(this)" alt="" class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                                            <div class="p-4">
+                                                                <h3 class="text-l font-raleway font-[700] mb-1 text-dark2 text-center">
+                                                                    FB_IMG_1697579544710
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                                                                </div>
+                                <!-- ************************************************ -->
+                            </div>
+                            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"> 
+                                <input   
+                                    type="file" 
+                                    name="ContentTypeMedia"
+                                    id ="ContentTypeMedia"
+                                    accept="image/png, image/jpeg, image/gif" 
+                                    multiple 
+                                />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -352,7 +610,9 @@
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
 <script src="{!! url('assets/js/property-edit.js') !!}"></script>
+<script src="{!! url('assets/js/property-content-filePond.js') !!}"></script>
 <script src="{!! url('assets/js/property-content-builder.js') !!}"></script>
+
 <script>
     let propertyContent = [],
         propertyPath = "/" + $('#propertyToken').val() + "/";
@@ -419,7 +679,9 @@
         }
     }];
 
-    //Create a FilePond instance gallery
+    /**
+     * Initialize FilePond property gallery
+     */
     const pondGallery = FilePond.create(document.querySelector('input[id="ContentGallery"]'));
     pondGallery.setOptions({
         server: {
@@ -488,9 +750,10 @@
     })
 
     pondGallery.files = setGalleryFiles;
-    //End FilePond Gallery
 
-    //FilePond ContentMedia
+    /**
+     * Initialize FilePond content builder media
+     */
     const pond = FilePond.create(document.querySelector('input[id="ContentTypeMedia"]'));
     pond.setOptions({
         server: {
@@ -503,7 +766,10 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 withCredentials: false,
-                onload: (response) => {console.log(response); response.key},
+                onload: (response) => {
+                    updateFilePondGalleryContent()
+                    response.key
+                },  
                 onerror: (response) => response.data,
                 ondata: (formData) => {
                     return formData;
@@ -522,22 +788,27 @@
         }
     }) 
 
+    // Listen for addfile event
+    pond.on('FilePond:addfile', function (e) {
+        console.log('file added event', e);
+    });
+
     pond.on('processfiles', () => {
         // pond.getFiles().forEach(function (item) {
-        //     contentTypeMedia.push($('#propertyEntryCode').val() + "/" + item.filename);
+        //     let src = "/" + $('#propertyToken').val() + "/" + item.filename,
+        //         filetemplate = mediaEditorContentBuilderItemTemplate(src, item.filename);
+
+        //     $("#media-collection").append(filetemplate);
         // })
     });
 
     pond.on('removefile', function(error, file) {
-        if($('#ContentTypeBuilderModal').is(':visible')) {
-            contentTypeMedia = contentTypeMedia.filter(function(item) {
-                return item != file.source;
-            })
-        }
+        removeFileContentMedia(file);
     });
-    //End FilePond ContentMedia
-    
-    //Initiate content builder
+
+    /**
+     * Initiate content builder
+     */
     let canvas = document.getElementById('content-container');
     propertyContent = JSON.parse(canvas.dataset.content);
     propertyContent.forEach((obj) => {
@@ -550,33 +821,20 @@
             case 3:
                 obj.value = JSON.parse(obj.value)
                 obj.attribute = JSON.parse(obj.attribute)
-                break;
+                break;   
             case 4:
                 obj.value = JSON.parse(obj.value)
+
+                if(obj.attribute.length > 0)
+                    obj.attribute = JSON.parse(obj.attribute)
                 break;
-        
         } 
 
         contentBuilder(obj, true)
     })
 
-    // let raw = '<?php echo $propertyContent; ?>';
-    // propertyContent = JSON.parse(raw.replaceAll('\n','<br/>').replaceAll('"[','[').replaceAll(']"',']').replaceAll('"{','{').replaceAll('}"','}'));
-    // propertyContent.forEach((obj) => {
-    //     obj.status = 1;
-
-    //     if(obj.contentTypeId != 3) 
-    //         delete obj.attribute;
-
-    //     contentBuilder(obj, true)
-    // })
-
-
-
     if(propertyContent.length > 0)
         $("#alert-property-info").hide();
-   
-
 
     $('#contentTypeEnumBtn').click(function () {
         let input = $('#ContentTypeEnumaration');
@@ -611,20 +869,6 @@
         input.val("");
     })
 
-
-    $("#propertyForm").on("submit", function(e) {
-        let information = propertyContent.filter(function (item) { return item.status == 1 }),
-            sortItem =  $("#content-container").find(".item");
-        
-        sortItem.each(function(n, e) {
-            let id = $(e).data('id');
-            information[information.map(e => e.id).indexOf(id)].sort = n; 
-        })
-
-        $("#propertyContentBuilder").attr("value", JSON.stringify(information));
-        $("#propertyGallery").attr("value", JSON.stringify(contentMediaGallery));
-    })
-
     $("#category").change(function() {
         let typeContainer = $("#type-container"),
             type = $("#type");
@@ -656,20 +900,42 @@
         $(".item[data-id=" + item + "]").remove();
         $('#ContentTypeBuilderModal').modal('hide');
     });
+ 
 </script>
 
+<!-- Ekko Lightbox -->
+<script src="{!! url('assets/AdminLTE/plugins/ekko-lightbox/ekko-lightbox.js') !!}"></script>
+<script>
+  $(function () {
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox({
+        alwaysShowClose: true
+      });
+    });
+  })
+</script>
+
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
+            /** Sortable **/
             $( "#content-container" ).sortable();
             $( "#content-container" ).disableSelection();
+
+            $("#media-collection").sortable();
+            $("#sortable").sortable();
+            $("#gallla").sortable();
+            $("#gallla").disableSelection();
 
             $( "#contentTypeEnumListGroup" ).sortable();
             $( "#contentTypeEnumListGroup" ).disableSelection();
 
+            /** Input mask **/
             $("input.mask").each((i,ele)=>{
                 let clone=$(ele).clone(false)
                 clone.attr("type","text")

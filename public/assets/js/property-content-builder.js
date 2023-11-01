@@ -69,26 +69,50 @@ function contentBuilder (obj, arg) {
             break;
         //Media
         case 4:
-            let imgs = "";
+            let thumbnails = "",
+                _column = typeof(obj.attribute.column) == 'undefined' ? 1 :  obj.attribute.column ? obj.attribute.column : 1;
 
-            obj.value.forEach(function (item) {
-                //BTK :: for deployment directory
+            obj.value.forEach(function (item) { 
                 // template += `<img src="{{ asset('storage/public/tmp/` + item + `') }}" alt="" title=""></a>`
-                imgs += `<img src="/storage/tmp` + item + `" alt="" title=""></a>`
+                // imgs += `<img src="/storage/tmp` + item + `" alt="" title=""></a>`
+
+                let file = item.split('/'),
+                    fileName = file[2];
+
+                thumbnails += 
+                    `<div class="column-${_column}">
+                        <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                            <a class="group transition-all duration-500"
+                                href="#">
+                                <div class="thumbnails-${_column}  relative overflow-hidden">
+                                    <img src="/storage/tmp${item}" 
+                                        alt="" 
+                                        class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                                    >
+                                </div>
+                            </a>
+                        </div>
+                    </div>`;
             })  
 
-            if(arg)  {
-                template = `<div class="item-wrapper" data-uid=`+ obj.id +`>
-                                <div data-id=`+ obj.id +` data-type=4 class="item bg-light p-3 rounded mb-1">` + imgs + `</div>
-                                ` +  toolbar.format(obj.id) +`
-                            </div>`;
-            }
-            else 
+            if(arg) {
+                template = 
+                    `<div class="item-wrapper container-flex" data-uid="${obj.id}">
+                        <div data-id=${obj.id} 
+                            data-type=4 
+                            data-sortable-id="0" 
+                            aria-dropeffect="move"
+                            class="item bg-light p-3 rounded mb-1 w-full" >
+                            ${thumbnails}
+                        </div>
+                        ${toolbar.format(obj.id)}
+                    </div>`;
+            } else {
                 $(".item[data-id=" + obj.id + "]")
                     .empty()
-                    .append(imgs);
+                    .append(thumbnails);
+            }
             break;
-
     }
 
     $("#content-container").append(template);
@@ -160,9 +184,9 @@ function contentBuilderEvents() {
 
 function addContentItem(e) {
     let item = {},
-            type = parseInt($("#contentType").val()),
-            action = $(e).data("id"),
-            append = $(e).data('append');
+        type = parseInt($("#contentType").val()),
+        action = $(e).data("id"),
+        append = $(e).data('append');
 
         item.id = propertyContent.length;
         item.contentTypeId = type;
@@ -200,14 +224,11 @@ function addContentItem(e) {
                         contentTypeMedia.push("/" + $('#propertyToken').val() + "/" + item.filename);
                 })
 
-                item.value = contentTypeMedia;
-
-                //BTK :: not nessesarry
-                //populate media gallery
-                // contentTypeMedia.forEach((file) => {
-                //     if(!contentMediaGallery.includes(file))
-                //         contentMediaGallery.push(file);
-                // })
+                item.value = getSortedMediaFiles(contentTypeMedia);
+                item.attribute = { 
+                    extension: "image", 
+                    column : $('#ContentTypeMediaImageColumn').val() 
+                };
 
                 break;
 
@@ -273,6 +294,58 @@ function getItemContentToolbar() {
                     <i class="fa fa-solid fa-plus-circle"></i>
                 </button>
             </div>`;
+}
+
+/**
+ * Sort content builder media images
+ */
+function getSortedMediaFiles(files) {
+    let sorted = [],
+        images =  $("#media-collection").find(".item-image");
+
+    images.each(function(n, e) {
+        let image = $(e).data('imgsource');
+
+        if(files.includes(image)) {
+            sorted.push(image);
+        }
+    })
+
+    return sorted;
+}
+
+/**
+ * Media editor content builder item template
+ */
+function mediaEditorContentBuilderItemTemplate(src, filename) {
+    return `<div data-imgsource="${src}"
+            class="item-image column-4" 
+            data-item-sortable-id="0" 
+            draggable="true" role="option" 
+            aria-grabbed="false"
+            >
+            <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                <a class="group transition-all duration-500"
+                    href="/storage/tmp${src}"
+                    data-toggle="lightbox" 
+                    data-title="${filename}" 
+                    data-gallery="gallery"
+                    href="#">
+                    <div class="thumbnails-4 relative overflow-hidden">
+                        <img src="/storage/tmp${src}" 
+                            onerror="mediaContentFileOnError('${src}')"
+                            alt="${filename}" 
+                            class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                        >
+                    </div>
+                </a>
+            </div>
+        </div>`; 
+}
+
+function mediaContentFileOnError(imgsource) {
+    console.log(imgsource)
+    $(`[data-imgsource='${imgsource}']`).remove()
 }
 
 // String prototype format

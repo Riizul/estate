@@ -1,3 +1,6 @@
+/**
+ * Content builder editor
+ */
 $("#content-container").on("click", ".item" ,function (){
     let type = $("#contentType"),
         actionBtn = $("#btn-action"),
@@ -38,6 +41,11 @@ $("#content-container").on("click", ".item" ,function (){
 
             break;
         case 4:
+            console.log(item.value);
+
+            /** 
+             * Set image source filepond
+             */
             let files = [];
             item.value.forEach(function (item) {
                 files.push({
@@ -50,6 +58,24 @@ $("#content-container").on("click", ".item" ,function (){
 
             pond.removeFiles();
             pond.files = files;
+
+            /** Gallery Collection */
+            let thumbnails = "";
+            item.value.forEach(function (item) { 
+                let file = item.split('/'),
+                    fileName = file[2];
+                thumbnails += mediaEditorContentBuilderItemTemplate(item, fileName);
+            }) 
+
+            $("#media-collection")
+                .empty()
+                .append(thumbnails);
+
+            /** Column image */
+            $("#ContentTypeMediaImageColumn")
+                .val(item.attribute.column)
+                .change();
+
             break;
     }
 
@@ -93,6 +119,25 @@ $("#contentType").change(function () {
     }
 })
 
+/**
+ * Update section content 
+ */
 $('#btn-action').click(function () {
     addContentItem(this);
+})
+
+/**
+ * Update property content 
+ */
+$("#propertyForm").on("submit", function(e) {
+    let information = propertyContent.filter(function (item) { return item.status == 1 }),
+        sortItem =  $("#content-container").find(".item");
+    
+    sortItem.each(function(n, e) {
+        let id = $(e).data('id');
+        information[information.map(e => e.id).indexOf(id)].sort = n; 
+    })
+
+    $("#propertyContentBuilder").attr("value", JSON.stringify(information));
+    $("#propertyGallery").attr("value", JSON.stringify(contentMediaGallery));
 })

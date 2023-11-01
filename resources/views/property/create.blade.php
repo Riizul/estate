@@ -294,13 +294,55 @@
 
                 <!-- ContentTypeMedia -->
                 <div id="type-media-container" class="mb-3 content-type-element">
-                    <label for="ContentTypeMedia" class="form-label">File upload</label>
-                    <input   
-                        type="file" 
-                        name="ContentTypeMedia"
-                        id ="ContentTypeMedia"
-                        accept="image/png, image/jpeg, image/gif"
-                        multiple />
+                    <label class="form-label">Thumbnails</label>
+                    <select 
+                        name="ContentTypeMediaImageColumn" 
+                        id="ContentTypeMediaImageColumn" 
+                        class="form-control mb-3"
+                        >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <div class="row mt-4">
+                        <nav class="w-100">
+                            <div class="nav nav-tabs" id="product-tab" role="tablist">
+                                <a class="nav-item nav-link active" 
+                                    id="product-desc-tab" 
+                                    data-toggle="tab" href="#product-desc" role="tab" 
+                                    aria-controls="product-desc" 
+                                    aria-selected="true">
+                                    Gallery
+                                </a>
+                                <a class="nav-item nav-link" 
+                                    id="product-comments-tab" 
+                                    data-toggle="tab" 
+                                    href="#product-comments" role="tab" 
+                                    aria-controls="product-comments" 
+                                    aria-selected="false">
+                                    Upload
+                                </a>
+                            </div>
+                        </nav>
+                        <div class="tab-content p-3  w-100" id="nav-tabContent">
+                            <div class="tab-pane fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
+                                <div id="media-collection" 
+                                    class="container-flex" 
+                                    data-sortable-id="0" 
+                                    aria-dropeffect="move">
+                               </div>
+                            </div>
+                            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"> 
+                                <input   
+                                    type="file" 
+                                    name="ContentTypeMedia"
+                                    id ="ContentTypeMedia"
+                                    accept="image/png, image/jpeg, image/gif" 
+                                    multiple 
+                                />
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -337,6 +379,7 @@
 
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
+<script src="{!! url('assets/js/property-content-filePond.js') !!}"></script>
 <script src="{!! url('assets/js/property-content-builder.js') !!}"></script>
 
 <script>
@@ -348,22 +391,15 @@
         contentMediaGallery = [];
         
 
-    // File uploader
-    // Get a reference to the file input element
-    const inputElement = document.querySelector('input[id="ContentTypeMedia"]');
-          
     // Register the plugin
     FilePond.registerPlugin(FilePondPluginImagePreview);
 
-    //Create a FilePond instance
-    const pond = FilePond.create(inputElement);
-
+    /**
+     * Initialize FilePond instance content builder media
+     */
+    const pond = FilePond.create(document.querySelector('input[id="ContentTypeMedia"]'));
     pond.setOptions({
         server: {
-            //url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyEntryCode"]').value,
-            // headers: {
-            //     'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            // },
             load: '/storage/tmp',
             allowRemove: true,
             process: {
@@ -373,7 +409,10 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 withCredentials: false,
-                onload: (response) => {console.log(response); response.key},
+                onload: (response) => {
+                    updateFilePondGalleryContent() 
+                    response.key
+                },
                 onerror: (response) => response.data,
                 ondata: (formData) => {
                     return formData;
@@ -399,11 +438,7 @@
     });
 
     pond.on('removefile', function(error, file) {
-        if($('#ContentTypeBuilderModal').is(':visible')) {
-            contentTypeMedia = contentTypeMedia.filter(function(item) {
-                return item != file.source;
-            })
-        }
+        removeFileContentMedia(file);
     });
 
     //FilePond Gallery
@@ -874,9 +909,9 @@
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
+            $("#media-collection").sortable();
             $( "#content-container" ).sortable();
             $( "#content-container" ).disableSelection();
-
             $( "#contentTypeEnumListGroup" ).sortable();
             $( "#contentTypeEnumListGroup" ).disableSelection();
         });

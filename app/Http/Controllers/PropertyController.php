@@ -130,11 +130,10 @@ class PropertyController extends Controller
                     $information->value = json_encode($item['value']);
             }
 
-            if (array_key_exists('model', $item)) {
-                $information->attribute = json_encode($item['model']);
-            }
+            if (array_key_exists('attribute', $item)) 
+                $information->attribute = json_encode($item['attribute']);
             else
-            $information->attribute = "";
+                $information->attribute = "";
 
             $information->save();
         }

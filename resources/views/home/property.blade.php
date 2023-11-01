@@ -1,4 +1,10 @@
 @extends('layouts.frontend-master')
+
+@section('styles')
+<!-- Lightbox -->
+<link href="{!! url('lightbox/css/lightbox.min.css') !!}" rel="stylesheet">
+@endsection
+
 @section('content')
 <!--/ Intro Single star /-->
 <section class="intro-single">
@@ -71,12 +77,32 @@
                       </ul>
                     </div>
                   @break
-                  @case(4) 
-                    @foreach(json_decode($item->value, true) as $item)
-                      <div class="news-img-box">
-                        <img src="{!! url('storage/tmp' , $item) !!}" alt="" class="img-fluid">
-                      </div>
-                    @endforeach
+                  @case(4)
+                    @php
+                        $column = isset( json_decode($item->attribute,true)['column']) ?  json_decode($item->attribute,true)['column'] : 1;
+                    @endphp
+                    <div class="container-flex w-full">
+                      @foreach(json_decode($item->value, true) as $item)
+                        @php
+                          $filename = explode("/", $item)[2];
+                        @endphp
+                        <div class="column-{{$column}}">
+                          <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                            <a class="group transition-all duration-500 media-img" 
+                              href="{!! url('storage/tmp' , $item) !!}"
+                              data-lightbox="gallery-set" 
+                            >
+                              <div class="thumbnails-{{$column}} relative overflow-hidden">
+                                <img 
+                                  src="{!! url('storage/tmp' , $item) !!}" 
+                                  alt="" 
+                                  class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                              </div>
+                            </a>
+                          </div>
+                        </div> 
+                      @endforeach
+                    </div>
                   @break
                 @endswitch
               @endforeach
@@ -88,5 +114,18 @@
     </div>
   </section>
   <!--/ Property Single End /-->
+@endsection
+
+@section('scripts')
+<!-- Lightbox -->
+<script src="{!! url('lightbox/js/lightbox-plus-jquery.min.js') !!}"></script>
+<script>
+  $(".media-img").on("click", function() {
+      $("body").addClass("overflow-hidden")
+  });
  
+  function lightboxClose() {
+    $("body").removeClass("overflow-hidden")
+  }
+</script>
 @endsection
