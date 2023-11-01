@@ -10,13 +10,13 @@ function contentBuilder (obj, arg) {
             if(arg) { 
                 template = '<div class="item-wrapper" data-uid='+ obj.id +' data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false">';
                     template += '<div data-id='+ obj.id +' data-type=1 class="item bg-light p-3 rounded mb-1">';
-                        template += '<h4>'+ obj.value +'</h4>';
+                        template += '<h2>'+ obj.value +'</h2>';
                     template += '</div>';
                     template += toolbar.format(obj.id);
                 template += '</div>';
             }
             else 
-                $(".item[data-id=" + obj.id + "] h4").text(obj.value)
+                $(".item[data-id=" + obj.id + "] h2").text(obj.value)
             
             break;
         //Paragraph
