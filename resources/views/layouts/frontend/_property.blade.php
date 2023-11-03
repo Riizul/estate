@@ -14,7 +14,7 @@
         </div>  
         <div class="card-overlay">
             <div class="proptery-tag-1">
-            {{ $item->category->name }}
+            {{ $item->state }}
             </div> 
             <div class="card-overlay-a-content">
                 <div class="card-header-a">

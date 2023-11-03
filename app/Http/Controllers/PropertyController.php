@@ -285,6 +285,20 @@ class PropertyController extends Controller
         //     ["status",'=', 'published'],
         // ])->get();
 
+        // $properties = Property::leftJoin('property_locations', function($join) {
+        //     $join->on('properties.locationId', '=', 'property_locations.id');
+        // })
+        // ->leftJoin('property_statuses', function ($join) {
+        //     $join->on('properties.stateId', '=', 'property_statuses.id');
+        // })
+        // ->where([
+        //     ["categoryId",'=', $category],
+        //     ["status",'=', 'published'],
+        // ])
+        // ->select('properties.*', 'property_locations.name as locationName', 'property_statuses.name as State')
+        // ->get();
+            
+
 
         $properties = Property::leftJoin('property_locations', function($join) {
                 $join->on('properties.locationId', '=', 'property_locations.id');
@@ -308,10 +322,24 @@ class PropertyController extends Controller
     }
 
     public function getFeatured() {
-        $properties = Property::where([
+        // $properties = Property::where([
+        //     ["featured",'=', 1],
+        //     ["status",'=', 'published'],
+        // ])->get();
+
+        /**BTK
+         * property_statuses add SOLD OUT, RE OPEN, RENTED, AVAILABLE
+        */
+
+        $properties = Property::leftJoin('property_statuses', function($join) {
+            $join->on('properties.stateId', '=', 'property_statuses.id');
+        })
+        ->where([
             ["featured",'=', 1],
             ["status",'=', 'published'],
-        ])->get();
+        ])
+        ->select('properties.*', 'property_statuses.name as state')
+        ->get();
 
         foreach ($properties as $item){ 
             $item->Seo = [ 
@@ -367,6 +395,7 @@ class PropertyController extends Controller
             'metaDescription'=> $property->description,
             'shareImage' => $property->banner
         ];
+        
 
         return $property;
     }
