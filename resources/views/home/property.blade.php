@@ -3,66 +3,111 @@
 @section('styles')
 <!-- Lightbox -->
 <link href="{!! url('lightbox/css/lightbox.min.css') !!}" rel="stylesheet">
+
+<style>
+  body {
+    background-color: #ffffff;
+  }
+
+  .property-description p {
+    margin-bottom: 0 !important;
+  }
+
+  .owl-dots {
+    display:none;
+  }
+</style>
 @endsection
 
 @section('content')
-<!--/ Intro Single star /-->
-<section class="intro-single">
+  <!--/ Intro /-->
+  <section class="intro-single">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 col-lg-6">
-          <div class="title-single-box">
-            <h1 class="title-single">{{ $property->name }}</h1>
-            <span class="color-text-a">{{ $property->location }}</span>
+        @if(strlen($property->name) < 25)
+          <div class="col-md-12 col-lg-6">
+            <div class="title-single-box">
+              <h1 class="title-single">{{ $property->name }}</h1>
+              <span class="color-text-a">{{ $property->location }}</span>
+            </div>
           </div>
-        </div>
-        <div class="col-md-12 col-lg-6">
-          <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="{{ env('APP_URL') }}/">Home</a>
-              </li>
-              <li class="breadcrumb-item">
-                <a href="{{ env('APP_URL') }}/{!! $property->category->slug !!}">
-                {{ $property->category->name }}
-                </a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">
-                {{$property->name}}
-              </li>
-            </ol>
-          </nav>
-        </div>
+          <div class="col-md-12 col-lg-6">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{{ env('APP_URL') }}/">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="{{ env('APP_URL') }}/{!! $property->category->slug !!}">
+                  {{ $property->category->name }}
+                  </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  {{$property->name}}
+                </li>
+              </ol>
+            </nav>
+          </div>
+        @else
+          <div class="col-md-12">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex p-0">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{{ env('APP_URL') }}/">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="{{ env('APP_URL') }}/{!! $property->category->slug !!}">
+                  {{ $property->category->name }}
+                  </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  {{$property->name}}
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-md-12">
+            <div class="title-single-box">
+              <h1 class="title-single">{{ $property->name }}</h1>
+              <span class="color-text-a">{{ $property->location }}</span>
+            </div>
+          </div>
+        @endif
       </div>
     </div>
   </section>
-  <!--/ Intro Single End /-->
+  <!--/ Intro End /-->
 
-  <!--/ Property Single Star /-->
+  <!--/ Property Single /-->
   <section class="property-single nav-arrow-b">
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <div id="property-single-carousel" class="owl-carousel owl-arrow gallery-property">
-            @foreach($property->gallery as $item)
-                <div class="carousel-item-b">
-                  <img src="{!! url('storage/tmp' , $item->source) !!}" alt="{{ $property->name }}">
-                </div>
-            @endforeach
-          </div>
+          @if(!$property->gallery->isEmpty())
+            <div id="property-single-carousel" class="owl-carousel owl-arrow gallery-property">
+              @foreach($property->gallery as $item)
+                  <div class="carousel-item-b">
+                    <img 
+                      src="{!! url('storage/tmp' , $item->source) !!}" 
+                      alt="{{ $property->name }}"
+                    >
+                  </div>
+              @endforeach
+            </div>
+          @endif
           <div class="row justify-content-between">
             <div class="col-md-7 col-lg-12 section-md-t3">
               @foreach($property->contents as $item)
                 @switch($item->contentTypeId)
                   @case(1)
-                    <div class="title-box-d m-t-50">
+                    <div class="title-box-d m-t-30 m-b-0">
                       <h3 class="title-d">
                         {!!html_entity_decode( nl2br(e($item->value)) )!!}
                       </h3>
                     </div>
                   @break
                   @case(2)
-                    <div class="property-description m-t-50">
+                    <div class="property-description m-t-10">
                       {!!html_entity_decode( nl2br(e($item->value)) )!!}
                     </div>
                   @break
@@ -87,7 +132,7 @@
                           $filename = explode("/", $item)[2];
                         @endphp
                         <div class="column-{{$column}}">
-                          <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                          <div class="rounded overflow-hidden bg-white hover:!drop-shadow-md">
                             <a class="group transition-all duration-500 media-img" 
                               href="{!! url('storage/tmp' , $item) !!}"
                               data-lightbox="gallery-set" 
@@ -119,6 +164,7 @@
 @section('scripts')
 <!-- Lightbox -->
 <script src="{!! url('lightbox/js/lightbox-plus-jquery.min.js') !!}"></script>
+
 <script>
   $(".media-img").on("click", function() {
       $("body").addClass("overflow-hidden")

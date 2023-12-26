@@ -2,12 +2,16 @@
 Real Estate Site
 
 # To do
-* Property viewing screen remove black header when scrolled   
+* Share buttons
+* Add send message
+* optimize image upload
+    - image resize feature
+✓ Search property
+✓ Property viewing screen remove black header when scrolled
 * Content builder 
     - paragraph 
         ✓ add font size
     - add capability to content section by column
-* image resize feature 
 * create property check if slug already exist 
     - if yes rename slug of delete property
     - else prompt that slug already taken

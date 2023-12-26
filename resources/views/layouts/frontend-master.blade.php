@@ -47,7 +47,21 @@
   </main>
   @include('layouts.frontend.footer')
 
-  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <a href="#" 
+    id="searchButon" 
+    class="back-to-top nav-search navbar-toggle-box-collapse"
+    data-toggle="collapse" 
+    data-target="#navbarTogglerDemo01" style="display:none !important">
+    <i class="fa fa-search"></i> Search
+  </a>
+  <a href="#" id="searchButton" 
+    class="search-button  navbar-toggle-box-collapse"
+    data-toggle="collapse" 
+    data-target="#navbarTogglerDemo01">
+    <i class="fa fa-search"></i> Search
+  </a>
+  <a href="#" id="backtotop" 
+  class="back-to-top" style="background: #94c6db"><i class="fa fa-chevron-up"></i></a>
   <div id="preloader"></div>
 
   <!-- JavaScript Libraries -->

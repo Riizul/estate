@@ -518,11 +518,9 @@
     }) 
 
     pondGallery.on('removefile', function(error, file) {
-        if($('#ContentGallaryModal').is(':visible')) {
-            contentMediaGallery = contentMediaGallery.filter(function(item) {
-                return item.source != propertyPath + file.filename;
-            })
-        }
+        contentMediaGallery = contentMediaGallery.filter(function(item) {
+            return item.source != propertyPath + file.filename;
+        })
     });
    
     let setGalleryFiles = [];
@@ -592,12 +590,17 @@
     pond.on('removefile', function(error, file) {
         removeFileContentMedia(file);
     });
+ 
+</script>
 
+
+<script>
     /**
      * Initiate content builder
      */
     let canvas = document.getElementById('content-container');
     propertyContent = JSON.parse(canvas.dataset.content);
+
     propertyContent.forEach((obj) => {
         obj.status = 1;
 
@@ -687,7 +690,6 @@
         $(".item[data-id=" + item + "]").remove();
         $('#ContentTypeBuilderModal').modal('hide');
     });
- 
 </script>
 
 <!-- Ekko Lightbox -->

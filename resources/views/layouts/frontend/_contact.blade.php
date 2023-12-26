@@ -26,7 +26,7 @@
             <p class="mb-3">
                 <img src="{!! url('images/icons/whatsapp.svg')!!}" alt="phone" class="mx-auto w-4 h-4">
                 Whatsapp
-                <a href="https://api.whatsapp.com/send?phone=639950114098" class="color-a">
+                <a href="https://api.whatsapp.com/send?phone=639762875508" class="color-a">
                 {{ env('GLOBAL_MOBILE') }}
                 </a>
             </p>

@@ -4,9 +4,6 @@
   <!--/ Carousel /-->
   <div class="intro intro-carousel">
     <div id="carousel" class="owl-carousel owl-theme">
-    
-      <!-- BTK -->
-      <!-- DISPLAY MUST BE FLAG/STARRED STATUS -->
       @php 
         $i = 0; 
       @endphp
@@ -32,7 +29,10 @@
                       {{ $item->name }}
                       </h1>
                       <p class="intro-title-top">
-                      {{ $item->description }}
+                      {{ substr($item->description, 0, 150 ) }}
+                      @if (strlen($item->description) > 150)
+                        ...
+                      @endif
                       </p>
                       <p class="intro-subtitle intro-price">
                         <a href="{{ env('APP_URL') }}{{ $item->uri }}"><span class="price-a">learn more</span></a>
@@ -49,17 +49,18 @@
         @endphp
       @endforeach
     </div>
+    
   </div>
+
+  
   <!--/ Carousel end /-->
 
   <!--/ Agent /-->
   <section class="section-services section-t6">
     <div class="container">
-      
       <div class="row">
         <section class="agent-single">
           <div class="container">
-          
             <div class="row">
               <div class="col-sm-12">
                 <div class="row">

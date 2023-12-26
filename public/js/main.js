@@ -25,7 +25,11 @@
 		$('.section-footer').hide();
 	break;
 	case "/house-and-lot":
+		$('#navbarDefault [data-id="house-and-lot"]').addClass("active")
+		break;
 	case "/condominium":
+		$('#navbarDefault [data-id="condominium"]').addClass("active")
+		break;
 	case "/for-rent":
 		$('.logo').attr('src', '/images/erb-logo.png')
 		$('#navbarDefault [data-id="properties"]').addClass("active")
@@ -38,17 +42,23 @@
   // Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 50) {
+		$('#searchButton').addClass("search-button-lg");
 		
-      $('.back-to-top').fadeIn('slow');
+		// $('#searchButon').css("top", "120px")
+		// $('#backtotop').fadeIn('slow');
 	  
     } else {
-      $('.back-to-top').fadeOut('slow');
+		$('#searchButton').removeClass("search-button-lg");
+
+		// $('#searchButon').css("top", "180px")
+    //   $('#backtotop').fadeOut('slow');
 	
 	  if(window.location.pathname != '/contact')
 		  $('.navbar-default').removeAttr("style")
     }
   });
-  $('.back-to-top').click(function(){
+  
+  $('#backtotop').click(function(){
     $('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
     return false;
   });
@@ -97,7 +107,7 @@
 	/*--/ Navbar Menu Reduce /--*/
 	$(window).bind('scroll', function () {
 		var pixels = 2;
-		var top = 1200;
+		var top = 100;
 
 		if(isTrans) {
 			if ($(window).scrollTop() > pixels) {
@@ -121,8 +131,10 @@
 		
 		
 		if ($(window).scrollTop() > top) {
+			$('.black-header').addClass('black-header-trans');
 			$('.scrolltop-mf').fadeIn(1000, "easeInOutExpo");
 		} else {
+			$('.black-header').removeClass('black-header-trans');
 			$('.scrolltop-mf').fadeOut(1000, "easeInOutExpo");
 		}
 	});

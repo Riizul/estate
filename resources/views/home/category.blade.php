@@ -35,7 +35,7 @@
           <div class="grid-option">
             <select id="locationDropdown" class="custom-select">
               <option value="0" selected>All</option>
-              @foreach ($locations as $location)
+              @foreach ($propertyLocations as $location)
                   <option value="{{ $location['locationId'] }}">
                     {{ $location['locationName'] }}
                   </option>

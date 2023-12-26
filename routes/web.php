@@ -30,6 +30,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/for-rent', 'HomeController@category')->name('home.for-rent'); 
     Route::get('/for-rent/{id}', 'HomeController@property'); 
 
+    Route::get('/search', 'HomeController@search')->name('home.search');
+    Route::post('/search', 'HomeController@search')->name('home.search');
+
     Route::group(['middleware' => ['guest']], function() {
         /**
          * Register Routes
