@@ -42,19 +42,16 @@
   // Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 50) {
-		$('#searchButton').addClass("search-button-lg");
-		
+		//$('#searchButton').addClass("search-button-lg");
 		// $('#searchButon').css("top", "120px")
 		// $('#backtotop').fadeIn('slow');
-	  
     } else {
-		$('#searchButton').removeClass("search-button-lg");
-
+		//$('#searchButton').removeClass("search-button-lg");
 		// $('#searchButon').css("top", "180px")
-    //   $('#backtotop').fadeOut('slow');
+		//$('#backtotop').fadeOut('slow');
 	
-	  if(window.location.pathname != '/contact')
-		  $('.navbar-default').removeAttr("style")
+		if(window.location.pathname != '/contact')
+			$('.navbar-default').removeAttr("style");
     }
   });
   

@@ -541,16 +541,16 @@ a:hover {
 .search-button {
   position: fixed;
   display: none;
-  background: #189ad3;
+  background: #0A7CFF;
   color: transparent;
-  width: 44px;
-  height: 44px;
+  width: 60px;
+  height: 60px;
   text-align: center;
   line-height: 1;
   font-size: 16px;
   border-radius: 50%;
-  right: 20px;
-  bottom: 20px;
+  right: 24px;
+  bottom: 94px;
   z-index: 11;
   transition: all .1s ease;
 }
@@ -562,8 +562,9 @@ a:hover {
 }
 
 .search-button i {
-  padding-top: 12px;
+  padding-top: 16px;
   color: #fff;
+  font-size: 25px;
 }
 
 .search-button:hover {

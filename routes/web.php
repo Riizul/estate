@@ -32,6 +32,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::post('/search', 'HomeController@search')->name('home.search');
+        
+    Route::get('/biolinks', 'BioController@index')->name('bio.index');
+    Route::post('/send', 'BioController@contact')->name('bio.send');
 
     Route::group(['middleware' => ['guest']], function() {
         /**
