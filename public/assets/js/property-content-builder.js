@@ -1,5 +1,137 @@
+/**
+ * Add new section
+ */
+$("#btn-create-content").click(function () {
+    resetContentBuilderForm()
+})
 
-//Events
+/**
+ * onChange content builder type
+*/
+$("#contentType").change(function () {
+    $(".content-type-element").hide();
+    $("#ContentTypeHeader").empty();
+    $("#ContentTypeParagraph").empty();
+
+    switch (this.value) {
+        //Header
+        case "1":
+            $("#type-header-container").show();
+            break;
+        //Paragraph
+        case "2":
+            $("#type-paragraph-container").show();
+            break;
+        //Enumeration
+        case "3":
+            $("#type-enumaration-container").show();
+            break;
+        //Media
+        case "4":
+            $("#type-media-container").show();
+            break;
+    }
+})
+
+/**
+ * Section content editor
+ */
+$("#content-container").on("click", ".item" ,function (){
+    console.log("click section");
+
+    let type = $("#contentType"),
+        actionBtn = $("#btn-action"),
+        deleteBtn = $("#btn-delete");
+
+    let selected = $(this).data("type"),
+        item = propertyContent.filter((i) => { return i.id == $(this).data("id") })[0];
+
+    switch (selected) {
+        case 1:
+            $("#ContentTypeHeader").val(item.value)
+            break;
+        case 2:
+            // $("#ContentTypeParagraph").val(item.value.replaceAll('<br/>','\n'));
+            editor.setData(item.value);
+            break;
+        case 3:
+            let container = $('#contentTypeEnumListGroup');
+            container.empty();
+            contentTypeEnumaration = item.value;
+            contentTypeEnumaration.forEach(function (item, n) {
+                container
+                    .append(`<li class="list-group-item" data-id=` + n + ` data-value="` + item +`">
+                                <label class="form-check-label" for="firstCheckbox">`+ item +`</label>
+                                <button type="button" class="btn-close float-right deleteEnumarationList" data-id="`+ item +`" aria-label="Close"></button>
+                            </li>`);
+            })
+
+            $('.deleteEnumarationList')
+                    .off()
+                    .on('click', function () {
+                        let id =  $(this).data('id');
+                        contentTypeEnumaration = contentTypeEnumaration.filter(function(e) { return e !== id })
+                        $(this).parent().remove();
+                    })
+
+                $("#ContentTypeEnumColumn").val(item.attribute.column)
+
+            break;
+        case 4:
+            /** 
+             * Column image 
+             */
+            $("#ContentTypeMediaImageColumn")
+                .val(item.attribute.column)
+                .change();
+
+            /** 
+             * Set image source filepond
+             */
+            let files = [];
+            item.value.forEach(function (item) {
+                files.push({
+                    source: item,
+                    options: {
+                        type: 'local',
+                    }
+                })
+            })
+
+            pond.removeFiles();
+            pond.files = files;
+
+            /** 
+             * Gallery Collection 
+             */
+            let thumbnails = "";
+            item.value.forEach(function (item) { 
+                let file = item.split('/'),
+                    fileName = file[2];
+                thumbnails += mediaEditorContentBuilderItemTemplate(item, fileName);
+            }) 
+
+            $("#media-collection")
+                .empty()
+                .append(thumbnails);
+
+            break;
+    }
+
+    type.attr("disabled", true);
+    actionBtn
+        .data("id", "update")
+        .data("item", $(this).data("id"))
+        .text("Update");
+    deleteBtn
+        .data("item", $(this).data("id"))
+        .show();
+
+    $('#ContentTypeBuilderModal').modal('show');
+    $("#contentType").val(parseInt(selected)).trigger("change");
+
+})
+
 function contentBuilder (obj, arg) {
     let template = "",
         toolbar = getItemContentToolbar();
@@ -77,7 +209,9 @@ function contentBuilder (obj, arg) {
                 // imgs += `<img src="/storage/tmp` + item + `" alt="" title=""></a>`
 
                 let file = item.split('/'),
-                    fileName = file[2];
+                    path = file[1],
+                    img = file[2],
+                    size = geThumbnailSize(parseInt(_column));
 
                 thumbnails += 
                     `<div class="column-${_column}">
@@ -85,9 +219,11 @@ function contentBuilder (obj, arg) {
                             <a class="group transition-all duration-500"
                                 href="#">
                                 <div class="thumbnails-${_column}  relative overflow-hidden">
-                                    <img src="/storage/tmp${item}" 
-                                        alt="" 
-                                        class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                                    <img src="/storage/tmp/${path}/thumbnail/${size + img}"
+                                        data-fallback="/storage/tmp${item}"
+                                        alt=""
+                                        loading="lazy"
+                                        class="property-banner h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
                                     >
                                 </div>
                             </a>
@@ -272,6 +408,7 @@ function resetContentBuilderForm() {
         .data("append", "0")
         .text("Add");
     $("#btn-delete").hide();
+    $("#media-collection").empty();
 
     pond.removeFiles();
     editor.setData();
@@ -318,6 +455,11 @@ function getSortedMediaFiles(files) {
  * Media editor content builder item template
  */
 function mediaEditorContentBuilderItemTemplate(src, filename) {
+    let file = src.split('/'),
+        path = file[1],
+        img = file[2];
+
+
     return `<div data-imgsource="${src}"
             class="item-image column-4" 
             data-item-sortable-id="0" 
@@ -332,7 +474,8 @@ function mediaEditorContentBuilderItemTemplate(src, filename) {
                     data-gallery="gallery"
                     href="#">
                     <div class="thumbnails-4 relative overflow-hidden">
-                        <img src="/storage/tmp${src}" 
+                        <img src="/storage/tmp/${path}/thumbnail/sm-${img}"
+                            loading="lazy"
                             onerror="mediaContentFileOnError('${src}')"
                             alt="${filename}" 
                             class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
@@ -347,6 +490,19 @@ function mediaContentFileOnError(imgsource) {
     console.log(imgsource)
     $(`[data-imgsource='${imgsource}']`).remove()
 }
+
+function geThumbnailSize(column) {
+    console.log(column)
+    switch (column) {
+        case 1:
+            return 'lg-';
+        case 2:
+            return 'md-';
+        default:
+            return 'sm-';
+    }
+}
+
 
 // String prototype format
 if (!String.prototype.format) {

@@ -43,4 +43,4 @@ function checkIfImageExists(url, callback) {
         callback(false);
       };
     }
-  }
+}

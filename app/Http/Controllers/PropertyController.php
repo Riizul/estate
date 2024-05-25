@@ -11,6 +11,7 @@ use App\Models\PropertyGallery;
 use App\Models\PropertyStatus;
 use App\Models\ContentTypeBuilder;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PropertyController extends Controller
 {
@@ -45,7 +46,11 @@ class PropertyController extends Controller
             'propertyTypes'=>$propertyTypes, 
             'instructors'=> 'Boy Butyok');
 
+            
+         
+
         return view('property.index')->with($data);
+
  
     }
 
@@ -303,11 +308,17 @@ class PropertyController extends Controller
         $properties = Property::leftJoin('property_locations', function($join) {
                 $join->on('properties.locationId', '=', 'property_locations.id');
             })
+            ->leftJoin('property_statuses', function($join) {
+                $join->on('properties.stateId', '=', 'property_statuses.id');
+            })
             ->where([
                 ["categoryId",'=', $category],
                 ["status",'=', 'published'],
             ])
-            ->select('properties.*', 'property_locations.name as locationName')
+            ->select(
+                'properties.*', 
+                'property_locations.name as locationName',
+                'property_statuses.name as state')
             ->get();
 
         foreach ($properties as $item){ 

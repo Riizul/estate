@@ -174,4 +174,17 @@
   </section>
   <!--/ Property End /-->
 
+<script>
+  // BTK:: Temporary
+  // Set property banner fallback image
+  var images = document.getElementsByClassName('property-banner');
+  for (var i = 0; i < images.length; i++) {
+      images[i].onerror = function() {
+      const image = this;
+      var srcAttribute = image.getAttribute('data-fallback');
+      this.src = srcAttribute;
+    };
+  }
+</script>
+
 @endsection

@@ -124,13 +124,27 @@
                   @break
                   @case(4)
                     @php
-                        $column = isset( json_decode($item->attribute,true)['column']) ?  json_decode($item->attribute,true)['column'] : 1;
+                      $column = isset( json_decode($item->attribute,true)['column']) ?  json_decode($item->attribute,true)['column'] : 1;
+                      $size = "sm-";
+                      switch ($column) {
+                          case 1:
+                            $size = 'lg-';
+                            break;
+                          case 2:
+                            $size = 'md-';
+                            break;
+                      } 
+                    
                     @endphp
                     <div class="container-flex w-full">
                       @foreach(json_decode($item->value, true) as $item)
                         @php
-                          $filename = explode("/", $item)[2];
+                          $file = explode("/", $item);
+                          $filePath = $file[1];
+                          $filename = $file[2];
+                          $fileSource = $filePath . "/thumbnail/" . $size . $filename;
                         @endphp
+
                         <div class="column-{{$column}}">
                           <div class="rounded overflow-hidden bg-white hover:!drop-shadow-md">
                             <a class="group transition-all duration-500 media-img" 
@@ -138,10 +152,13 @@
                               data-lightbox="gallery-set" 
                             >
                               <div class="thumbnails-{{$column}} relative overflow-hidden">
-                                <img 
-                                  src="{!! url('storage/tmp' , $item) !!}" 
-                                  alt="" 
-                                  class="h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer">
+                                <img
+                                  src="{!! url('storage/tmp' , $fileSource) !!}"
+                                  data-fallback="{!! url('storage/tmp' , $item) !!}" 
+                                  alt="{!! $filename !!}" 
+                                  loading="lazy"
+                                  class="property-image h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                                >
                               </div>
                             </a>
                           </div>
@@ -159,6 +176,20 @@
     </div>
   </section>
   <!--/ Property Single End /-->
+
+<script>
+  // BTK:: Temporary
+  // Set property banner fallback image
+  var images = document.getElementsByClassName('property-image');
+  for (var i = 0; i < images.length; i++) {
+      images[i].onerror = function() {
+      const image = this;
+      var srcAttribute = image.getAttribute('data-fallback');
+      this.src = srcAttribute;
+    };
+  }
+</script>
+
 @endsection
 
 @section('scripts')

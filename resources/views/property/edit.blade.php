@@ -2,8 +2,10 @@
 
 @section('styles')
 <!-- Filepond  -->
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+<!-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="{{ asset('filePond/css/filepond.css')}}">
+<!-- <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/> -->
+<link rel="stylesheet" href="{{ asset('filePond/css/filepond-plugin-image-preview-4.6.12.css')}}">
 
 <!-- Ekko Lightbox -->
 <link rel="stylesheet" href="{!! url('assets/AdminLTE/plugins/ekko-lightbox/ekko-lightbox.css') !!}">
@@ -35,7 +37,10 @@
                      <!-- Profile  -->
                      <div class="card card-primary card-outline">
                         <div class="card-body">
-                            <form id="propertyForm" method="post" action="{{ route('content.update', $property->id) }}">
+                            <form id="propertyForm"
+                                method="post"
+                                action="{{ route('content.update', $property->id) }}"
+                                enctype="multipart/form-data">
                                 @method('patch')
                                 @csrf
                                 <!-- Banner -->
@@ -188,7 +193,7 @@
                                 <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
                                 <input type="hidden" id="propertyBanner" name="propertyBanner" value="{{ $property->banner }}" >
                                 <input type="hidden" id="propertyGallery" name="propertyGallery" >
-                                <button type="submit" class="btn btn-primary btn-block"><b>Update</b></button>
+                                <button type="submit" class="btn btn-primary"><b>Update</b></button>
                             </form>
                         </div>
                     </div>
@@ -394,6 +399,10 @@
 @section('scripts')
 <!-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> -->
+
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
 <script src="{!! url('assets/js/property-edit.js') !!}"></script>
@@ -408,7 +417,7 @@
         contentMediaGallery = [];
 
     // Register the plugin
-    FilePond.registerPlugin(FilePondPluginImagePreview);
+   FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginImageTransform);
 
     //Create FilePond instance banner
     const pondBanner = FilePond.create(document.querySelector('input[id="ContentBanner"]'));
@@ -448,7 +457,7 @@
                 // Should call the load method when done, no parameters required
                 load();
             },
-        }
+        },
     }) 
 
     pondBanner.on('removefile', function(error, file) {
@@ -475,14 +484,15 @@
             load: '/storage/tmp',
             allowRemove: true,
             process: {
-                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyToken"]').value + '&id=1',
+                url : '/upload?propertyEntry=' + document.querySelector('input[id="propertyToken"]').value,
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 withCredentials: false,
                 onload: (response) => {
-                    //populate gallery
+
+                    // Update filepond images
                     contentMediaGallery = [];
                     pondGallery.getFiles().forEach(function (item) {
                         let file  = {
@@ -493,14 +503,17 @@
                         }
 
                         contentMediaGallery.push(file);
-                    })
-                    
-                    response.key
+                    });
 
                     console.log(response);
+
+                    
                 },
-                onerror: (response) => response.data,
+                onerror: (response) => {
+                    console.log(response)
+                },
                 ondata: (formData) => {
+                    console.log(formData);
                     return formData;
                 }
             },
@@ -515,19 +528,34 @@
                 load();
             },
         }
-    }) 
+    });
 
     pondGallery.on('removefile', function(error, file) {
         contentMediaGallery = contentMediaGallery.filter(function(item) {
             return item.source != propertyPath + file.filename;
         })
     });
+
+    pondGallery.on('processfile', (error, file) => {
+        // This event is triggered when each file is processed/uploaded
+        if (!error) {
+            console.log('File uploaded successfully:', file.filename);
+            // Perform additional actions if needed
+
+            console.log(file)
+
+        } else {
+            console.error('Error uploading file:', file.filename);
+        }
+    });
    
+    // Set filepond images
     let setGalleryFiles = [];
+
     contentMediaGallery = JSON.parse(`<?php echo $propertyGallery; ?>`);
     contentMediaGallery.forEach(function (item) {
         setGalleryFiles.push({
-            source: item.source ,
+            source: item.source,
             options: {
                 type: 'local',
             }
@@ -535,10 +563,16 @@
     })
 
     pondGallery.files = setGalleryFiles;
-
+    // End
+ 
+ 
     /**
      * Initialize FilePond content builder media
      */
+    
+     // Register the plugin
+    FilePond.registerPlugin(FilePondPluginImageResize, FilePondPluginImageTransform);
+
     const pond = FilePond.create(document.querySelector('input[id="ContentTypeMedia"]'));
     pond.setOptions({
         server: {
@@ -552,10 +586,12 @@
                 },
                 withCredentials: false,
                 onload: (response) => {
-                    updateFilePondGalleryContent()
                     response.key
+                    updateFilePondGalleryContent();
                 },  
-                onerror: (response) => response.data,
+                onerror: (response) => {
+                    console.log(response.data)
+                },
                 ondata: (formData) => {
                     return formData;
                 }
@@ -593,7 +629,6 @@
  
 </script>
 
-
 <script>
     /**
      * Initiate content builder
@@ -622,6 +657,18 @@
 
         contentBuilder(obj, true)
     })
+
+    // BTK:: Temporary
+    // Set property banner fallback image
+    var images = document.getElementsByClassName('property-banner');
+    for (var i = 0; i < images.length; i++) {
+        images[i].onerror = function() {
+            const image = this;
+            var srcAttribute = image.getAttribute('data-fallback');
+            console.log(srcAttribute)
+            this.src = srcAttribute;
+        };
+    }
 
     if(propertyContent.length > 0)
         $("#alert-property-info").hide();
@@ -678,10 +725,6 @@
                 type.val("0");
                 break;
         }
-    })
-    
-    $("#btn-create-content").click(function () {
-        resetContentBuilderForm()
     })
 
     $('#btn-delete').click(function () {

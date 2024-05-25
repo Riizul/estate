@@ -157,9 +157,17 @@
                                 <div class="proptery-tag-1">
                                 {{ $item->state }}
                                 </div> 
-                                <img src="{!! url('storage/tmp', $item->banner) !!}" 
-                                    alt=""
-                                    class="w-100 cover"
+                                @php
+                                    $file = explode("/", $item->banner);
+                                    $filePath = $file[1];
+                                    $filename = $file[2];
+                                    $fileSource = $filePath . "/thumbnail/md-". $filename;
+                                @endphp
+                                <img 
+                                    src="{!! url('storage/tmp', $fileSource) !!}"
+                                    data-fallback="{!! url('storage/tmp', $item->banner) !!}"
+                                    alt="{{ $item->name }}"
+                                    class="w-100 cover property-banner"
                                     width="382"
                                     height="230px"
                                 >
@@ -182,6 +190,18 @@
         </div>
     </div>
 </section>
+<script>
+  // BTK:: Temporary
+  // Set property banner fallback image
+  var images = document.getElementsByClassName('property-banner');
+  for (var i = 0; i < images.length; i++) {
+        images[i].onerror = function() {
+        const image = this;
+        var srcAttribute = image.getAttribute('data-fallback');
+        this.src = srcAttribute;
+    };
+  }
+</script>
 @endsection
 
 @section('scripts')
