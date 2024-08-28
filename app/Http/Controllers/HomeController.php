@@ -172,6 +172,9 @@ class HomeController extends Controller
             'selectedlocation' => 0,
             'filtertype' => [],
             'filterstatus' => [],
+            'title' => $property->name,
+            'meta_keywords' => $property->keywords,
+            'meta_description' => $property->description,
         );
 
         return view('home.property')->with($data);

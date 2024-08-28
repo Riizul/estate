@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Ebeye Jane - Bio</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <meta content="Cebu real estate, Cebu condominium for sale, house and lot in Cebu, Cebu property rentals, Cebu homes for sale, Cebu City real estate, Mandaue property for sale, Lapu-Lapu rental properties, Cebu real estate agents, Cebu property investment" name="keywords">
+  <meta content="Find top Cebu properties with Ebeye Jane, licensed broker. Explore condo, house & lot, and rental. Contact us for expert advice and service." name="description">
+  
+  <title>Ebeye Jane | Licensed real estate broker</title>
 
   <!-- Favicons -->
   <link href="{!! url('bio/img/favicon.png') !!}" rel="icon">
-  <link href="{!! url('bio/img/apple-touch-icon.png') !!}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -22,11 +20,9 @@
   <link href="{!! url('bio/vendor/bootstrap-icons/bootstrap-icons.css') !!}" rel="stylesheet">
   <link href="{!! url('bio/vendor/boxicons/css/boxicons.min.css') !!}" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
+  <!-- Main CSS File -->
   <link href="{!! url('bio/css/style.css') !!}" rel="stylesheet">
- 
 </head>
-
 <body>
   
   <div id="fb-root"></div>
@@ -211,9 +207,5 @@
  
   <!-- Template Main JS File -->
   <script src="{!! url('bio/js/main.js') !!}"></script>
-
-  <style> 
-</style>
 </body>
-
 </html>

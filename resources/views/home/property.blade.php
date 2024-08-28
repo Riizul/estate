@@ -1,6 +1,13 @@
 @extends('layouts.frontend-master')
 
+@section('title', $title)
+
+@section('meta_keywords', $meta_keywords)
+
+@section('meta_description', $meta_description)
+
 @section('styles')
+
 <!-- Lightbox -->
 <link href="{!! url('lightbox/css/lightbox.min.css') !!}" rel="stylesheet">
 

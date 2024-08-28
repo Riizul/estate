@@ -1,11 +1,11 @@
 @extends('layouts.app-master')
 
 @section('styles')
-<!-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/> -->
-
-<link rel="stylesheet" href="{{asset('filePond/css/filepond-plugin-image-preview.css')}}">
-<link rel="stylesheet" href="{{asset('filePond/css/filepond.css')}}">
+<!-- Filepond  -->
+<!-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="{{ asset('filePond/css/filepond.css')}}">
+<!-- <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/> -->
+<link rel="stylesheet" href="{{ asset('filePond/css/filepond-plugin-image-preview-4.6.12.css')}}">
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
         </div>
     </section>
   
-    <!-- Main content -->
+     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -94,35 +94,6 @@
                                         <span class="text-danger text-left">{{ $errors->first('price') }}</span>
                                     @endif
                                 </div>
-                                <!-- Description -->
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea 
-                                        class="form-control"
-                                        name="description" 
-                                        placeholder="Description"
-                                        rows="5" required></textarea>
-                                    <!-- <input value="{{ old('description') }}"
-                                        type="text" 
-                                        class="form-control" 
-                                        name="description" 
-                                        placeholder="description" required> -->
-                                    @if ($errors->has('description'))
-                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
-                                    @endif
-                                </div>
-                                <!-- <div class="mb-3 d-none">
-                                    <label for="price" class="form-label">price</label>
-                                    <input value="{{ old('price') }}"
-                                        type="text" 
-                                        class="form-control" 
-                                        name="price" 
-                                        placeholder="price" required>
-                                    @if ($errors->has('price'))
-                                        <span class="text-danger text-left">{{ $errors->first('price') }}</span>
-                                    @endif
-                                </div> -->
-                                
                                 <!-- Category -->
                                 <div class="mb-3">
                                     <label for="category" class="form-label">Category</label>
@@ -142,14 +113,29 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+                                <!-- Meta Keywords -->
                                 <div class="mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select name="status" class="form-control" >
-                                        @foreach($propertyStatuses as $status)
-                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="keywords" class="form-label">Meta Keywords</label>
+                                    <textarea 
+                                        class="form-control"
+                                        name="keywords" 
+                                        placeholder="keywords"
+                                        rows="5" required></textarea>
+                                    @if ($errors->has('keywords'))
+                                        <span class="text-danger text-left">{{ $errors->first('keywords') }}</span>
+                                    @endif
+                                </div>
+                                <!-- Meta Description -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Meta Description</label>
+                                    <textarea 
+                                        class="form-control"
+                                        name="description" 
+                                        placeholder="Description"
+                                        rows="5" required></textarea>
+                                    @if ($errors->has('description'))
+                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
+                                    @endif
                                 </div>
                                 <!-- Featured -->
                                 <div class="mb-3">
@@ -159,6 +145,15 @@
                                         <option value="1">Yes</option>
                                     </select>
                                 </div>
+                                <!-- Status -->
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select name="status" class="form-control" >
+                                        @foreach($propertyStatuses as $status)
+                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 <input type="hidden" id="propertyToken" name="propertyToken" value="{{ $propertyToken }}">
                                 <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
@@ -166,7 +161,6 @@
                                 <input type="hidden" id="propertyBanner" name="propertyBanner" >
 
                                 <button type="submit" class="btn btn-primary btn-block"><b>Submit</b></button>
-                                <!-- <a href="{{ route('content.index') }}" class="btn btn-default">Back</a> -->
                             </form>
                         </div>
                     </div>
@@ -377,8 +371,11 @@
 <!-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> -->
 
+<!-- FilePond -->
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
+
+<!-- Content builder -->
 <script src="{!! url('assets/js/property-content-filePond.js') !!}"></script>
 <script src="{!! url('assets/js/property-content-builder.js') !!}"></script>
 
@@ -723,6 +720,7 @@
         input.val("");
     })
 
+ 
 
     $("#btn-gallery-content").click(function () {
 
@@ -743,7 +741,6 @@
 
     $('#ContentTypeBuilderModal').on('show.bs.modal', function (e) {
     })
-
 
     $("#propertyForm").on("submit", function(e) {
         let information = propertyContent.filter(function (item) { return item.status == 1 }),
@@ -781,9 +778,13 @@
 
 </script>
 
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<script src="{{asset('jQuery/jquery-1.12.4.js')}}"></script>
+<!-- jQuery -->
+<!-- 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+-->
+
+<script src="{{asset('jQuery/jquery-1.12.4.js')}}"></script> 
 <script src="{{asset('jQuery/jquery-ui.js')}}"></script>
 <script>
     jQuery.noConflict();
@@ -798,6 +799,7 @@
     })(jQuery);
 </script>
 
+<!-- CKEditor -->
 <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('ckeditor/samples/js/sample.js')}}"></script>
 <script>

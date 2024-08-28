@@ -211,7 +211,7 @@ function contentBuilder (obj, arg) {
                 let file = item.split('/'),
                     path = file[1],
                     img = file[2],
-                    size = geThumbnailSize(parseInt(_column));
+                    size = getThumbnailSize(parseInt(_column));
 
                 thumbnails += 
                     `<div class="column-${_column}">
@@ -223,7 +223,7 @@ function contentBuilder (obj, arg) {
                                         data-fallback="/storage/tmp${item}"
                                         alt=""
                                         loading="lazy"
-                                        class="property-banner h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                                        class="property-images h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
                                     >
                                 </div>
                             </a>
@@ -491,8 +491,7 @@ function mediaContentFileOnError(imgsource) {
     $(`[data-imgsource='${imgsource}']`).remove()
 }
 
-function geThumbnailSize(column) {
-    console.log(column)
+function getThumbnailSize(column) {
     switch (column) {
         case 1:
             return 'lg-';

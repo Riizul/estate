@@ -106,18 +106,6 @@
                                         <span class="text-danger text-left">{{ $errors->first('price') }}</span>
                                     @endif
                                 </div>
-                                <!-- Description -->
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea 
-                                        class="form-control"
-                                        name="description" 
-                                        placeholder="description"
-                                        rows="5" required>{{ $property->description }}</textarea>
-                                    @if ($errors->has('description'))
-                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
-                                    @endif
-                                </div>
                                 <!-- Category -->
                                 <div class="mb-3">
                                     <label for="category" class="form-label">Category</label>
@@ -152,21 +140,29 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <!-- Status -->
+                                <!-- Meta Keywords -->
                                 <div class="mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select name="status" class="form-control" >
-                                        @foreach($propertyStatuses as $status)
-                                        <option 
-                                            value="{{ $status->id }}"
-                                            @if ($property->stateId == $status->id)
-                                            {{'selected="selected"'}}
-                                            @endif 
-                                        >
-                                        {{ $status->name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
+                                    <label for="keywords" class="form-label">Meta Keywords</label>
+                                    <textarea 
+                                        class="form-control"
+                                        name="keywords" 
+                                        placeholder="keywords"
+                                        rows="5" required>{{ $property->keywords }}</textarea>
+                                    @if ($errors->has('keywords'))
+                                        <span class="text-danger text-left">{{ $errors->first('keywords') }}</span>
+                                    @endif
+                                </div>
+                                <!-- Meta Description -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Meta Description</label>
+                                    <textarea 
+                                        class="form-control"
+                                        name="description" 
+                                        placeholder="description"
+                                        rows="5" required>{{ $property->description }}</textarea>
+                                    @if ($errors->has('description'))
+                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
+                                    @endif
                                 </div>
                                 <!-- Featured -->
                                 <div class="mb-3">
@@ -188,7 +184,23 @@
                                         </option>
                                     </select>
                                 </div>
-
+                                <!-- Status -->
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select name="status" class="form-control" >
+                                        @foreach($propertyStatuses as $status)
+                                        <option 
+                                            value="{{ $status->id }}"
+                                            @if ($property->stateId == $status->id)
+                                            {{'selected="selected"'}}
+                                            @endif 
+                                        >
+                                        {{ $status->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
                                 <input type="hidden" id="propertyToken" name="propertyToken" value="{{  $property->token }}">
                                 <input type="hidden" id="propertyContentBuilder" name="propertyContentBuilder" >
                                 <input type="hidden" id="propertyBanner" name="propertyBanner" value="{{ $property->banner }}" >
@@ -400,9 +412,10 @@
 <!-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> -->
 
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<!-- <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script> -->
+
 <script src="{{asset('filePond/js/filepond-plugin-image-preview.js')}}"></script>
 <script src="{{asset('filePond/js/filepond.js')}}"></script>
 <script src="{!! url('assets/js/property-edit.js') !!}"></script>
@@ -417,7 +430,7 @@
         contentMediaGallery = [];
 
     // Register the plugin
-   FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginImageTransform);
+   FilePond.registerPlugin(FilePondPluginImagePreview);
 
     //Create FilePond instance banner
     const pondBanner = FilePond.create(document.querySelector('input[id="ContentBanner"]'));
@@ -571,7 +584,7 @@
      */
     
      // Register the plugin
-    FilePond.registerPlugin(FilePondPluginImageResize, FilePondPluginImageTransform);
+    // FilePond.registerPlugin(FilePondPluginImageResize, FilePondPluginImageTransform);
 
     const pond = FilePond.create(document.querySelector('input[id="ContentTypeMedia"]'));
     pond.setOptions({
@@ -659,13 +672,12 @@
     })
 
     // BTK:: Temporary
-    // Set property banner fallback image
-    var images = document.getElementsByClassName('property-banner');
+    // catch error property image
+    var images = document.getElementsByClassName('property-images');
     for (var i = 0; i < images.length; i++) {
         images[i].onerror = function() {
             const image = this;
             var srcAttribute = image.getAttribute('data-fallback');
-            console.log(srcAttribute)
             this.src = srcAttribute;
         };
     }
@@ -749,8 +761,11 @@
 </script>
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
+<script src="{{asset('jQuery/jquery-1.12.4.js')}}"></script>
+<script src="{{asset('jQuery/jquery-ui.js')}}"></script>
 <script>
     jQuery.noConflict();
     (function( $ ) {

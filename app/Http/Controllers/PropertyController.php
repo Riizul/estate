@@ -16,17 +16,6 @@ use Intervention\Image\Facades\Image;
 class PropertyController extends Controller
 {
     public function index() {
-
-        // dd(Property::all());
-
-        //String
-        //return view('property.index', ['author' => 'Victoria']);
-        
-        //Db data
-        // $propertyTypes = PropertyType::all();
-        // return view('property.index', compact('propertyTypes'));
-
-
         $property = Property::leftJoin('property_categories', function($join) {
             $join->on('properties.categoryId', '=', 'property_categories.id');
           })
@@ -46,12 +35,7 @@ class PropertyController extends Controller
             'propertyTypes'=>$propertyTypes, 
             'instructors'=> 'Boy Butyok');
 
-            
-         
-
         return view('property.index')->with($data);
-
- 
     }
 
     public function create() 
@@ -100,8 +84,6 @@ class PropertyController extends Controller
 
     public function store(Request $request)
     {
-        //dd(json_decode($request->propertyContentBuilder, true));
-
         $property = new Property;
         $property->typeId = $request->type;
         $property->categoryId = $request->category;
@@ -110,6 +92,7 @@ class PropertyController extends Controller
         $property->locationId = $request->locationId;
         $property->location =  $request->location;
         $property->price =  is_null($request->price)? "" : $request->price;
+        $property->keywords =  $request->keywords;
         $property->description =  $request->description;
         $property->slug =  $this->slugify($request->name);
         $property->uri =  '/' . $this->slugify(PropertyCategory::where('id','=', $request->category)->get()->first()->name) . '/' . $this->slugify($request->name);
@@ -208,8 +191,6 @@ class PropertyController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
-
         //Information
         $property = Property::find($id);
         $property->typeId = $request->type;
@@ -219,6 +200,7 @@ class PropertyController extends Controller
         $property->locationId = $request->locationId;
         $property->location =  $request->location;
         $property->price =  is_null($request->price)? "" : $request->price;
+        $property->keywords =  $request->keywords;
         $property->description =  $request->description;
         $property->slug =  $this->slugify($request->name);
         $property->uri =  '/' . $this->slugify(PropertyCategory::where('id','=', $request->category)->get()->first()->name) . '/' . $this->slugify($request->name);
@@ -284,26 +266,6 @@ class PropertyController extends Controller
             default:
                 return Property::where("status",'=', 'published')->get(); 
         }
-
-        // $properties = Property::where([
-        //     ["categoryId",'=', $category],
-        //     ["status",'=', 'published'],
-        // ])->get();
-
-        // $properties = Property::leftJoin('property_locations', function($join) {
-        //     $join->on('properties.locationId', '=', 'property_locations.id');
-        // })
-        // ->leftJoin('property_statuses', function ($join) {
-        //     $join->on('properties.stateId', '=', 'property_statuses.id');
-        // })
-        // ->where([
-        //     ["categoryId",'=', $category],
-        //     ["status",'=', 'published'],
-        // ])
-        // ->select('properties.*', 'property_locations.name as locationName', 'property_statuses.name as State')
-        // ->get();
-            
-
 
         $properties = Property::leftJoin('property_locations', function($join) {
                 $join->on('properties.locationId', '=', 'property_locations.id');
@@ -387,7 +349,6 @@ class PropertyController extends Controller
 
     private function build($property)
     {
-        // dd(PropertyCategory::where('id','=', $property->categoryId)->get()->first());
         $property->category = PropertyCategory::where('id','=', $property->categoryId)->get()->first();
         $property->type = PropertyType::where('id','=', $property->typeId)->get()->first();
         $property->status = PropertyStatus::where('id','=', $property->stateId)->get()->first();

@@ -1,4 +1,4 @@
-<!--/ footer Star /-->
+<!--/ footer Start /-->
 <section class="section-footer p-b-50">
 @include('layouts.frontend._contact')
 </section>
@@ -9,11 +9,11 @@
         <div class="copyright-footer">
           <p class="copyright color-text-a m-b-50">
             &copy; Copyright
-            <span class="color-a">Ebeye</span> All Rights Reserved.
+            <span class="color-a">Ebeye Jane</span> All Rights Reserved.
           </p>
         </div>
       </div>
     </div>
   </div>
 </footer>
-  <!--/ Footer End /-->
+<!--/ Footer End /-->

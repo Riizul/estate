@@ -21,6 +21,7 @@ class CreatePropertiesTable extends Migration
             $table->int('featured');
             $table->string('name');
             $table->string('location');
+            $table->string('keywords');
             $table->string('description');
             $table->string('slug');
             $table->string('uri');
