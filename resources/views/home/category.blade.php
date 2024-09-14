@@ -1,4 +1,13 @@
 @extends('layouts.frontend-master')
+
+@section('title', $title)
+
+@section('meta_keywords', $meta_keywords)
+
+@section('meta_description', $meta_description)
+
+@section('styles')
+
 @section('content')
    <!--/ Intro Single star /-->
    <section class="intro-single">

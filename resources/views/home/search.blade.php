@@ -1,5 +1,16 @@
 @extends('layouts.frontend-master')
 
+@section('title', 'Search property for sale')
+
+@section(
+    'meta_keywords', 
+    'Search property for sale in '. $meta_keywords)
+
+@section(
+    'meta_description',
+    'Discover a wide range of properties for sale in Cebu, making it easy to find your ideal home. Browse through listings with photos, videos, virtual tours, affordability checks, and market insights to help you make an informed decision on your next property'
+)
+
 @section('styles')
 <style>
     .btn-search {

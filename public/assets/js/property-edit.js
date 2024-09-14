@@ -1,5 +1,3 @@
-
-
 /**
  * Update section content 
  */

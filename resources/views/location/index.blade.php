@@ -58,13 +58,12 @@
                             <tr>
                                 <td>{{ $item->name }}</td>
                                 <td>
-                                    <a href="#" 
+                                    <button
                                         class="btn btn-info btn-sm btn-icon"
-                                        data-id="{{ $item->id }}" 
-                                        data-name="{{ $item->name }}" 
+                                        data-item="{{ $item }}" 
                                         edit>
                                         <i class="fa fa-pen"></i> 
-                                    </a>
+                                    </button>
                                     <a href="{{ route('location.destroy', $item->id) }}" 
                                         class="btn btn-danger btn-sm btn-icon">
                                         <i class="fa fa-trash"></i> 
@@ -83,7 +82,7 @@
 </div>
 
 
-<!-- Gallery Modal-->
+<!-- Modal-->
 <div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -135,16 +134,14 @@
     })
 
     $("[edit]").click(function() {
+        const dataItem = $(this).data("item");
 
-        console.log('sdf');
-        let id = $(this).data("id"),
-            name = $(this).data("name");
+        $("#locationId").val(dataItem.id);
+        $("#name").val(dataItem.name);
 
         $("#action").val("edit");
-        $("#locationId").val(id);
-        $("#name").val(name);
-        $('.modal-title').text("Edit location");
         $("#locationModal").modal("show");
+        $('.modal-title').text("Edit location");
     })
 </script>
 
@@ -163,7 +160,10 @@
     $(document).ready(function () {
         $('#grid').dataTable({
             "bLengthChange": false,
-            language: {search: "", searchPlaceholder: "Search..." },
+            language: {
+                search: "",
+                searchPlaceholder: "Search..." 
+            },
         });
 
         // $('#grid_filter input').addClass('form-control')

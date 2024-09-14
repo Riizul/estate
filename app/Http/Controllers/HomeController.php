@@ -27,7 +27,7 @@ class HomeController extends Controller
     }
 
     public function search(Request $request)
-    { 
+    {
         $query = Property::query();
         $query
             ->leftJoin('property_statuses', function($join) {
@@ -105,7 +105,8 @@ class HomeController extends Controller
             'filterstatus' => $request->filterstatus,
             'properties' => $properties,
             'categories' => PropertyCategory::all(),
-            'locations' => PropertyLocation::orderBy('name', 'asc')->get()
+            'locations' => PropertyLocation::orderBy('name', 'asc')->get(),
+            'meta_keywords' => PropertyLocation::pluck('name')->implode(', ')
         );
 
         return view('home.search')->with($data);
@@ -143,6 +144,12 @@ class HomeController extends Controller
             ];
         })->values()->all();
 
+        //meta data
+        $locations = PropertyLocation::pluck('name')->implode(', ');
+        $title = $category .' for sale';
+        $keywords = $category .' for sale in '. $locations;
+        $description = 'Find '. $category .' properties with Ebeye Jane, licensed broker in '.  $locations;
+
         $data = array(
             'slug' => $slug, 
             'category' => $category,
@@ -153,6 +160,9 @@ class HomeController extends Controller
             'selectedlocation' => 0,
             'filtertype' => [],
             'filterstatus' => [],
+            'title' => $title,
+            'meta_keywords' => $keywords,
+            'meta_description' => $description
         );
 
         return view('home.category')->with($data);

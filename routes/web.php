@@ -26,9 +26,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/house-and-lot', 'HomeController@category')->name('home.house-and-lot');
     Route::get('/house-and-lot/{id}', 'HomeController@property'); 
     Route::get('/condominium', 'HomeController@category')->name('home.condominium');
-    Route::get('/condominium/{id}', 'HomeController@property'); 
+    Route::get('/condominium/{id}', 'HomeController@property');
     Route::get('/for-rent', 'HomeController@category')->name('home.for-rent'); 
-    Route::get('/for-rent/{id}', 'HomeController@property'); 
+    Route::get('/for-rent/{id}', 'HomeController@property');
 
     Route::get('/search', 'HomeController@search')->name('home.search');
     Route::post('/search', 'HomeController@search')->name('home.search');

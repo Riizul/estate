@@ -6,17 +6,17 @@ Real Estate Site
 
 - 08-26-2024
 
-  > issue found only on local environment could not upload banner on create property
-  > on edit property make auto create thumbnails for image load error occur
-  > Messenger plugin not working
+  > - issue found only on local environment could not upload banner on create property
+  > - on edit property make auto create thumbnails for image load error occur
+  > - Messenger plugin not working
 
 - 06-17-2024
 
-  > Media Gallery
-  > Improve SEO
+  > - Media Gallery
+  > - Improve SEO
 
 - 05-24-2024
-  > localize filepone js libraries
+  > - localize filepone js libraries
 
 * 04-27-2024
 

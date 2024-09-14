@@ -18,15 +18,8 @@ class LocationController extends Controller
 
     public function store(Request $request)
     {
-        if($request->action == "add") {
-            $location = new PropertyLocation;
-            $location->name = $request->name;
-        }
-        else {
-            $location = PropertyLocation::find($request->locationId);
-            $location->name = $request->name;
-        }
-
+        $location = $request->action == "add" ? new PropertyLocation : PropertyLocation::find($request->locationId);
+        $location->name = $request->name;
         $location->save();
 
         return redirect()

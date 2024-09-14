@@ -198,12 +198,12 @@ class PropertyController extends Controller
         $property->stateId = $request->status;
         $property->name = $request->name;
         $property->locationId = $request->locationId;
-        $property->location =  $request->location;
-        $property->price =  is_null($request->price)? "" : $request->price;
-        $property->keywords =  $request->keywords;
-        $property->description =  $request->description;
-        $property->slug =  $this->slugify($request->name);
-        $property->uri =  '/' . $this->slugify(PropertyCategory::where('id','=', $request->category)->get()->first()->name) . '/' . $this->slugify($request->name);
+        $property->location = $request->location;
+        $property->price = is_null($request->price)? "" : $request->price;
+        $property->keywords = $request->keywords;
+        $property->description = $request->description;
+        $property->slug = $this->slugify($request->name);
+        $property->uri = $this->generateUrl($request);
         $property->banner = $request->propertyBanner;
         $property->featured = $request->featured;
         $property->save();
@@ -248,6 +248,12 @@ class PropertyController extends Controller
         }
 
         return redirect('/content/'. $id. '/edit');
+    }
+
+    private function generateUrl($request) {
+        $category = $this->slugify(PropertyCategory::where('id','=', $request->category)->get()->first()->name);
+        $name = $this->slugify($request->name);
+        return '/' . $category . '/' . $name;
     }
 
     public function getProperties($id) 
