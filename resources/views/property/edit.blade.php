@@ -327,56 +327,83 @@
                         </select>
                     </div>
                 </div>
+
                 <!-- ContentTypeMedia -->
                 <div id="type-media-container" class="mb-3 content-type-element">
-                    <label class="form-label">Thumbnails</label>
-                    <select 
-                        name="ContentTypeMediaImageColumn" 
-                        id="ContentTypeMediaImageColumn" 
-                        class="form-control mb-3"
+                    <!-- Type -->
+                    <label class="form-label">Type</label>
+                    <div class="input-group mb-3">
+                        <select id="ContentTypeMediaExtension"
+                            name="ContentTypeMediaExtension" 
+                            class="form-control"
                         >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
+                            <option value="image">Image</option> 
+                            <option value="video">Video</option>
+                        </select>
+                    </div>
 
-                    <div class="row mt-4">
-                        <nav class="w-100">
-                        <div class="nav nav-tabs" id="product-tab" role="tablist">
-                            <a class="nav-item nav-link active" 
-                                id="product-desc-tab" 
-                                data-toggle="tab" href="#product-desc" role="tab" 
-                                aria-controls="product-desc" 
-                                aria-selected="true">
-                                Gallery
-                            </a>
-                            <a class="nav-item nav-link" 
-                                id="product-comments-tab" 
-                                data-toggle="tab" 
-                                href="#product-comments" role="tab" 
-                                aria-controls="product-comments" 
-                                aria-selected="false">
-                                Upload
-                            </a>
-                        </div>
-                        </nav>
-                        <div class="tab-content p-3  w-100" id="nav-tabContent">
-                            <div class="tab-pane fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
-                                <div id="media-collection" 
-                                    class="container-flex" 
-                                    data-sortable-id="0" 
-                                    aria-dropeffect="move">
+                    <!-- Video media -->
+                    <div id="video-media" style="display:none">
+                        <label class="form-label">Video url</label>
+                        <input  
+                            type="text" 
+                            class="form-control" 
+                            name="ContentTypeMediaVideo" 
+                            id="ContentTypeMediaVideo"
+                        >
+                    </div>
 
-                               </div>
+                    <!-- Image media -->
+                    <div id="image-media">
+                        <label class="form-label">Thumbnails</label>
+                        <select 
+                            name="ContentTypeMediaImageColumn" 
+                            id="ContentTypeMediaImageColumn" 
+                            class="form-control mb-3"
+                            >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+
+                        <div class="row mt-4">
+                            <nav class="w-100">
+                            <div class="nav nav-tabs" id="product-tab" role="tablist">
+                                <a class="nav-item nav-link active" 
+                                    id="product-desc-tab" 
+                                    data-toggle="tab" href="#product-desc" role="tab" 
+                                    aria-controls="product-desc" 
+                                    aria-selected="true">
+                                    Gallery
+                                </a>
+                                <a class="nav-item nav-link" 
+                                    id="product-comments-tab" 
+                                    data-toggle="tab" 
+                                    href="#product-comments" role="tab" 
+                                    aria-controls="product-comments" 
+                                    aria-selected="false">
+                                    Upload
+                                </a>
                             </div>
-                            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"> 
-                                <input   
-                                    type="file" 
-                                    name="ContentTypeMedia"
-                                    id ="ContentTypeMedia"
-                                    accept="image/png, image/jpeg, image/gif" 
-                                    multiple 
-                                />
+                            </nav>
+                            <div class="tab-content p-3  w-100" id="nav-tabContent">
+                                <div class="tab-pane fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
+                                    <div id="media-collection" 
+                                        class="container-flex" 
+                                        data-sortable-id="0" 
+                                        aria-dropeffect="move">
+
+                                </div>
+                                </div>
+                                <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"> 
+                                    <input   
+                                        type="file" 
+                                        name="ContentTypeMedia"
+                                        id ="ContentTypeMedia"
+                                        accept="image/png, image/jpeg, image/gif" 
+                                        multiple 
+                                    />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -659,12 +686,11 @@
             case 3:
                 obj.value = JSON.parse(obj.value)
                 obj.attribute = JSON.parse(obj.attribute)
-                break;   
+                break;
             case 4:
-                obj.value = JSON.parse(obj.value)
-
-                if(obj.attribute.length > 0)
-                    obj.attribute = JSON.parse(obj.attribute)
+                obj.attribute = JSON.parse(obj.attribute)
+                if(obj.attribute.extension == 'image')
+                    obj.value = JSON.parse(obj.value)
                 break;
         } 
 

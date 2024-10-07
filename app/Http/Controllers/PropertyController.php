@@ -114,6 +114,12 @@ class PropertyController extends Controller
                 case 2:
                     $information->value =str_replace("\n","", $item['value']);
                     break;
+                case 4:
+                    if($item['attribute']['extension'] == "video")
+                        $information->value = $item['value'];
+                    else
+                        $information->value = json_encode($item['value']);
+                    break;
                 default:
                     $information->value = json_encode($item['value']);
             }
@@ -221,6 +227,12 @@ class PropertyController extends Controller
                 case 1:
                 case 2:
                     $information->value =str_replace("\n","", $item['value']);
+                    break;
+                case 4:
+                    if($item['attribute']['extension'] == "video")
+                        $information->value = $item['value'];
+                    else
+                        $information->value = json_encode($item['value']);
                     break;
                 default:
                     $information->value = json_encode($item['value']);

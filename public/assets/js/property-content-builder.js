@@ -78,42 +78,50 @@ $("#content-container").on("click", ".item" ,function (){
 
             break;
         case 4:
-            /** 
-             * Column image 
-             */
-            $("#ContentTypeMediaImageColumn")
-                .val(item.attribute.column)
+            $("#ContentTypeMediaExtension")
+                .val(item.attribute.extension)
                 .change();
 
-            /** 
-             * Set image source filepond
-             */
-            let files = [];
-            item.value.forEach(function (item) {
-                files.push({
-                    source: item,
-                    options: {
-                        type: 'local',
-                    }
+            if(item.attribute.extension == 'image') {
+                /** 
+                 * Column image 
+                 */
+                $("#ContentTypeMediaImageColumn")
+                    .val(item.attribute.column)
+                    .change();
+                
+                /** 
+                 * Set image source filepond
+                 */
+                let files = [];
+                item.value.forEach(function (item) {
+                    files.push({
+                        source: item,
+                        options: {
+                            type: 'local',
+                        }
+                    })
                 })
-            })
 
-            pond.removeFiles();
-            pond.files = files;
+                pond.removeFiles();
+                pond.files = files;
 
-            /** 
-             * Gallery Collection 
-             */
-            let thumbnails = "";
-            item.value.forEach(function (item) { 
-                let file = item.split('/'),
-                    fileName = file[2];
-                thumbnails += mediaEditorContentBuilderItemTemplate(item, fileName);
-            }) 
+                /** 
+                 * Gallery Collection 
+                 */
+                let thumbnails = "";
+                item.value.forEach(function (item) { 
+                    let file = item.split('/'),
+                        fileName = file[2];
+                    thumbnails += mediaEditorContentBuilderItemTemplate(item, fileName);
+                }) 
 
-            $("#media-collection")
-                .empty()
-                .append(thumbnails);
+                $("#media-collection")
+                    .empty()
+                    .append(thumbnails);
+            } else {
+                $("#ContentTypeMediaVideo").val(item.value);
+            }
 
             break;
     }
@@ -130,6 +138,20 @@ $("#content-container").on("click", ".item" ,function (){
     $('#ContentTypeBuilderModal').modal('show');
     $("#contentType").val(parseInt(selected)).trigger("change");
 
+})
+
+$("#ContentTypeMediaExtension").change(function () {
+    $("#image-media").hide();
+    $("#video-media").hide();
+
+    switch (this.value) {
+        case "video":
+            $("#video-media").show();
+            break;
+        default:
+            $("#image-media").show();   
+            break;
+    }
 })
 
 function contentBuilder (obj, arg) {
@@ -201,35 +223,39 @@ function contentBuilder (obj, arg) {
             break;
         //Media
         case 4:
-            let thumbnails = "",
-                _column = typeof(obj.attribute.column) == 'undefined' ? 1 :  obj.attribute.column ? obj.attribute.column : 1;
+            let element = "";
+            if( obj.attribute.extension == "video") {
+                element += `<iframe width="100%" height="315" src="`+ obj.value +`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+            } else {
+                const _column = typeof(obj.attribute.column) == 'undefined' ? 1 :  obj.attribute.column ? obj.attribute.column : 1;
 
-            obj.value.forEach(function (item) { 
-                // template += `<img src="{{ asset('storage/public/tmp/` + item + `') }}" alt="" title=""></a>`
-                // imgs += `<img src="/storage/tmp` + item + `" alt="" title=""></a>`
+                obj.value.forEach(function (item) { 
+                    // template += `<img src="{{ asset('storage/public/tmp/` + item + `') }}" alt="" title=""></a>`
+                    // imgs += `<img src="/storage/tmp` + item + `" alt="" title=""></a>`
 
-                let file = item.split('/'),
-                    path = file[1],
-                    img = file[2],
-                    size = getThumbnailSize(parseInt(_column));
+                    let file = item.split('/'),
+                        path = file[1],
+                        img = file[2],
+                        size = getThumbnailSize(parseInt(_column));
 
-                thumbnails += 
-                    `<div class="column-${_column}">
-                        <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
-                            <a class="group transition-all duration-500"
-                                href="#">
-                                <div class="thumbnails-${_column}  relative overflow-hidden">
-                                    <img src="/storage/tmp/${path}/thumbnail/${size + img}"
-                                        data-fallback="/storage/tmp${item}"
-                                        alt=""
-                                        loading="lazy"
-                                        class="property-images h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
-                                    >
-                                </div>
-                            </a>
-                        </div>
-                    </div>`;
-            })  
+                    element += 
+                        `<div class="column-${_column}">
+                            <div class="box-shadow rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                                <a class="group transition-all duration-500"
+                                    href="#">
+                                    <div class="thumbnails-${_column}  relative overflow-hidden">
+                                        <img src="/storage/tmp/${path}/thumbnail/${size + img}"
+                                            data-fallback="/storage/tmp${item}"
+                                            alt=""
+                                            loading="lazy"
+                                            class="property-images h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                                        >
+                                    </div>
+                                </a>
+                            </div>
+                        </div>`;
+                })  
+            }
 
             if(arg) {
                 template = 
@@ -239,14 +265,14 @@ function contentBuilder (obj, arg) {
                             data-sortable-id="0" 
                             aria-dropeffect="move"
                             class="item bg-light p-3 rounded mb-1 w-full" >
-                            ${thumbnails}
+                            ${element}
                         </div>
                         ${toolbar.format(obj.id)}
                     </div>`;
             } else {
                 $(".item[data-id=" + obj.id + "]")
                     .empty()
-                    .append(thumbnails);
+                    .append(element);
             }
             break;
     }
@@ -354,18 +380,28 @@ function addContentItem(e) {
                 break;
             //Media
             case 4:
-                contentTypeMedia = [];
-                pond.getFiles().forEach(function (item) {
-                    if(!contentTypeMedia.includes(item))
-                        contentTypeMedia.push("/" + $('#propertyToken').val() + "/" + item.filename);
-                })
+                if( $("#ContentTypeMediaExtension").val() == "image") {
+                    contentTypeMedia = [];
+                    pond.getFiles().forEach(function (item) {
+                        if(!contentTypeMedia.includes(item))
+                            contentTypeMedia.push("/" + $('#propertyToken').val() + "/" + item.filename);
+                    })
 
-                item.value = getSortedMediaFiles(contentTypeMedia);
-                item.attribute = { 
-                    extension: "image", 
-                    column : $('#ContentTypeMediaImageColumn').val() 
-                };
-
+                    item.value = getSortedMediaFiles(contentTypeMedia);
+                    item.attribute = { 
+                        extension: "image", 
+                        column : $('#ContentTypeMediaImageColumn').val() 
+                    };
+                } else {
+                    let url = $("#ContentTypeMediaVideo").val()
+                    
+                    if(url.includes('https://youtu.be'))
+                        item.value = url.replace('https://youtu.be/', 'https://www.youtube.com/embed/')
+                    else
+                        item.value = url.replace('watch?v=', 'embed/')
+    
+                    item.attribute = { extension: "video" }
+                }
                 break;
 
         }

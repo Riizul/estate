@@ -141,36 +141,48 @@
                             $size = 'md-';
                             break;
                       } 
-                    
                     @endphp
                     <div class="container-flex w-full">
-                      @foreach(json_decode($item->value, true) as $item)
-                        @php
-                          $file = explode("/", $item);
-                          $filePath = $file[1];
-                          $filename = $file[2];
-                          $fileSource = $filePath . "/thumbnail/" . $size . $filename;
-                        @endphp
+                      @if (json_decode($item->attribute,true) == null || json_decode($item->attribute,true)['extension'] == 'image')
+                        @foreach(json_decode($item->value, true) as $item)
+                          @php
+                            $file = explode("/", $item);
+                            $filePath = $file[1];
+                            $filename = $file[2];
+                            $fileSource = $filePath . "/thumbnail/" . $size . $filename;
+                          @endphp
 
-                        <div class="column-{{$column}}">
-                          <div class="rounded overflow-hidden bg-white hover:!drop-shadow-md">
-                            <a class="group transition-all duration-500 media-img" 
-                              href="{!! url('storage/tmp' , $item) !!}"
-                              data-lightbox="gallery-set" 
-                            >
-                              <div class="thumbnails-{{$column}} relative overflow-hidden">
-                                <img
-                                  src="{!! url('storage/tmp' , $fileSource) !!}"
-                                  data-fallback="{!! url('storage/tmp' , $item) !!}" 
-                                  alt="{!! $filename !!}" 
-                                  loading="lazy"
-                                  class="property-image h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
-                                >
-                              </div>
-                            </a>
-                          </div>
-                        </div> 
-                      @endforeach
+                          <div class="column-{{$column}}">
+                            <div class="rounded overflow-hidden bg-white hover:!drop-shadow-md">
+                              <a class="group transition-all duration-500 media-img" 
+                                href="{!! url('storage/tmp' , $item) !!}"
+                                data-lightbox="gallery-set" 
+                              >
+                                <div class="thumbnails-{{$column}} relative overflow-hidden">
+                                  <img
+                                    src="{!! url('storage/tmp' , $fileSource) !!}"
+                                    data-fallback="{!! url('storage/tmp' , $item) !!}" 
+                                    alt="{!! $filename !!}" 
+                                    loading="lazy"
+                                    class="property-image h-full w-full object-cover object-center group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                                  >
+                                </div>
+                              </a>
+                            </div>
+                          </div> 
+                        @endforeach
+                      @else
+                        <iframe
+                          width="100%" 
+                          height="415" 
+                          src="{{ $item->value }}" 
+                          title="YouTube video player"
+                          frameborder="0" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        >
+                        </iframe>
+                      @endif
                     </div>
                   @break
                 @endswitch
